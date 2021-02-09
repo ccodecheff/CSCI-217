@@ -1,0 +1,132 @@
+%%% Natural numbers and strings (represented as natural-number lists)
+/*@ These are the index types I use to turn the nullary constructors, `num[n]`
+and `str[s]`, of System E into unary constructors `num(n)` and `str(s)`. I also
+provide the necessary primitive operations on these index types needed by the
+dynamics. In contrast to the way `plus` and `times` are defined in `arith`,
+here these operations do not presuppose that their arguments are "well-typed"
+(i.e., satisfy the judgments `nat` and `string`). This is just to illustrate
+the trade-offs involved with this alternate choice.
+<p>
+Contributor: JTW */
+
+Specification "nat-string".
+
+
+%== Typing lemmas ==
+
+Theorem plus_type : forall N1 N2 N3,
+  {nat N1} -> {nat N2} -> {plus_op N1 N2 N3} ->
+    {nat N3}.
+induction on 3. intros. case H3.
+  search.
+  case H1. apply IH to H5 H2 H4. search.
+
+Theorem times_type : forall N1 N2 N3,
+  {nat N1} -> {nat N2} -> {times_op N1 N2 N3} ->
+    {nat N3}.
+induction on 3. intros. case H3.
+  search.
+  case H1. apply IH to H6 H2 H4. apply plus_type to H7 H2 H5. search.
+
+Theorem cat_type : forall S1 S2 S3,
+  {string S1} -> {string S2} -> {cat_op S1 S2 S3} ->
+    {string S3}.
+induction on 3. intros. case H3.
+  search.
+  case H1. apply IH to H6 H2 H4. search.
+
+Theorem len_type : forall S1 N2, {string S1} -> {len_op S1 N2} -> {nat N2}.
+induction on 2. intros. case H2.
+  search.
+  case H1. apply IH to H5 H3. search.
+
+
+%== Totality (aka existence) lemmas ==
+
+Theorem plus_total : forall N1 N2,
+  {nat N1} -> {nat N2} ->
+    exists N3, {plus_op N1 N2 N3}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H3 H2. search.
+
+Theorem times_total : forall N1 N2,
+  {nat N1} -> {nat N2} ->
+    exists N3, {times_op N1 N2 N3}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H3 H2. apply times_type to H3 H2 H4. apply plus_total to H5 H2. %\
+     search.
+
+Theorem cat_total : forall S1 S2,
+  {string S1} -> {string S2} ->
+    exists S3, {cat_op S1 S2 S3}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H4 H2. search.
+
+Theorem len_total : forall S1,
+  {string S1} ->
+    exists N2, {len_op S1 N2}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H3. search.
+
+
+%== Uniqueness lemmas ==
+
+Theorem plus_uniq : forall N1 N2 N3 N3',
+  {plus_op N1 N2 N3} -> {plus_op N1 N2 N3'} ->
+    N3 = N3'.
+induction on 1. intros. case H1.
+  case H2. search.
+  case H2. apply IH to H3 H4. search.
+
+Theorem times_uniq : forall N1 N2 N3 N3',
+  {times_op N1 N2 N3} -> {times_op N1 N2 N3'} ->
+    N3 = N3'.
+induction on 1. intros. case H1.
+  case H2. search.
+  case H2. apply IH to H3 H5. apply plus_uniq to H4 H6. search.
+
+Theorem cat_uniq : forall S1 S2 S3 S3',
+  {cat_op S1 S2 S3} -> {cat_op S1 S2 S3'} ->
+    S3 = S3'.
+induction on 1. intros. case H1.
+  case H2. search.
+  case H2. apply IH to H3 H4. search.
+
+Theorem len_uniq : forall S1 N2 N2',
+  {len_op S1 N2} -> {len_op S1 N2'} ->
+    N2 = N2'.
+induction on 1. intros. case H1.
+  case H2. search.
+  case H2. apply IH to H3 H4. search.
+
+
+%== A derivable rule for plus_op ==
+
+Theorem plus_s : forall N1 N2 N3,
+  {plus_op N1 N2 N3} ->
+    {plus_op N1 (s N2) (s N3)}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+
+%== Generic stuff useful for extensions ==
+
+% Because of subordination, this theorem should come before any types are Closed
+Theorem member_prune[A,B] : forall M (L:list A), nabla (x:B),
+  member (M x) L -> exists M', M = y\M'.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+% This predicate is satisfied only by nominal constants ("variables")
+Define var : A -> prop by
+  nabla x, var x.
+
+
+% Index types will never have any hypothetical elements
+Close nat, string.

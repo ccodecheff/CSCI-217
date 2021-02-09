@@ -1,0 +1,97 @@
+%%% Chapter 4 (Statics) - Syntax, equality judgment
+/*@ The syntax of System E is summarized by the syntax chart in Section 4.1.
+System E involves an infinite collection of natural-number and string literals
+as constants (i.e., nullary constructors), num[n] and str[s], which are indexed
+by actual (mathematical) constants, n and s. Instead, these are represented in
+this formaliztion by unary constructors `num` and `str` applied to elements of
+type `nat` and `string`, respectively, which are defined in `nat-string.*`, 
+with strings essentially lists of nats -- think of them as lists of numerical
+ASCII codes. Also, for illustrative purposes, I have incorporated both the
+by-name and by-value interpretations of let into the same system as separate
+constructors, let and letv, respectively, to illustrate how each is handled in
+the metatheory.
+<p>
+Also, I define an equality judgment for the by-value fragment of System E. When
+used hypothetically on open expressions,  eq x1 V1, ..., eq xn Vn |- E1 = E2
+is the simultaneous substitution [V1,...,Vn/x1,...,xn]E1 = E2. It is also
+useful to have a "one-variable" version of this judgment and the ability to
+convert it to the two-variable one. Adapted from examples/misc/copy.
+<p>
+Contributor: JTW */
+
+Specification "syse-synt".
+Import "nat-string".
+
+%== Equality contexts ==
+
+Define eq_ctx : list o -> prop by
+  eq_ctx nil;
+  eq_ctx (eq X Y :: G) := eq_ctx G.
+
+Theorem eq_ctx_inv : forall G E,
+  eq_ctx G -> member E G ->
+    exists X Y, E = eq X Y.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+
+
+%= One-variable version of the eq judgment ==
+
+Define eq1 : list o -> exp -> exp -> prop by
+  eq1 G (num N) (num N) := eq_ctx G;
+  eq1 G (str S) (str S) := eq_ctx G;
+  eq1 G (plus E1 E2) (plus E1' E2') := eq1 G E1 E1' /\ eq1 G E2 E2';
+  eq1 G (times E1 E2) (times E1' E2') := eq1 G E1 E1' /\ eq1 G E2 E2';
+  eq1 G (cat E1 E2) (cat E1' E2') := eq1 G E1 E1' /\ eq1 G E2 E2';
+  eq1 G (len E) (len E') := eq1 G E E';
+  eq1 G (letv E1 E2) (letv E1' E2') :=
+    eq1 G E1 E1' /\ 
+    nabla x, eq1 (eq x x :: G) (E2 x) (E2' x);
+  nabla x, eq1 (G x) x x := nabla x, eq_ctx (G x) /\ member (eq x x) (G x).
+
+Theorem eq1_ctx : forall G E1 E2, eq1 G E1 E2 -> eq_ctx G.
+induction on 1. intros. case H1.
+  search.  
+  search.
+  apply IH to H2. search.
+  apply IH to H2. search.
+  apply IH to H2. search.
+  apply IH to H2. search.
+  apply IH to H2. search.
+  search.
+
+
+%== Separate eq variables in an assumption ==
+
+Theorem eq12_aux : forall G E1 E2, nabla x,
+  eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)} ->
+    nabla x y, {G, eq x y |- eq (E1 x) (E2 y)}.
+induction on 2. intros. case H2.
+  search.
+  search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. search.
+  apply IH to H1 H3. apply IH to _ H4. search.
+  case H4.
+    case H3. search.
+    apply member_prune to H5. apply eq_ctx_inv to H1 H5. case H3. search.
+
+
+%== Convert from eq1 derivations to eq derivations ==
+
+Theorem eq12 : forall G E1 E2, eq1 G E1 E2 -> {G |- eq E1 E2}.
+induction on 1. intros. case H1.
+  search.
+  search.
+  apply IH to H2. apply IH to H3. search.
+  apply IH to H2. apply IH to H3. search.
+  apply IH to H2. apply IH to H3. search.
+  apply IH to H2. search.
+  apply IH to H2. apply IH to H3. apply eq1_ctx to H2. apply eq12_aux to H6 H5.
+  /**/ search.
+  search.

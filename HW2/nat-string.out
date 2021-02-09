@@ -1,0 +1,1046 @@
+Welcome to Abella 2.0.6.
+Abella < Specification "nat-string".
+Reading specification "c:\\Users\\ratho\\OneDrive\\Desktop\\Chrome-Downloads\\HW2_217\\nat-string".
+
+Abella < Theorem plus_type : 
+forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3} -> {nat N3}.
+
+
+============================
+ forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3} -> {nat N3}
+
+plus_type < induction on 3.
+
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3}* -> {nat N3}
+============================
+ forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3}@ -> {nat N3}
+
+plus_type < intros.
+
+Variables: N1 N2 N3
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3}* -> {nat N3}
+H1 : {nat N1}
+H2 : {nat N2}
+H3 : {plus_op N1 N2 N3}@
+============================
+ {nat N3}
+
+plus_type < case H3.
+Subgoal 1:
+
+Variables: N3
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3}* -> {nat N3}
+H1 : {nat z}
+H2 : {nat N3}
+============================
+ {nat N3}
+
+Subgoal 2 is:
+ {nat (s N4)}
+
+plus_type < search.
+Subgoal 2:
+
+Variables: N2 N4 N6
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3}* -> {nat N3}
+H1 : {nat (s N6)}
+H2 : {nat N2}
+H4 : {plus_op N6 N2 N4}*
+============================
+ {nat (s N4)}
+
+plus_type < case H1.
+Subgoal 2:
+
+Variables: N2 N4 N6
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3}* -> {nat N3}
+H2 : {nat N2}
+H4 : {plus_op N6 N2 N4}*
+H5 : {nat N6}
+============================
+ {nat (s N4)}
+
+plus_type < apply IH to H5 H2 H4.
+Subgoal 2:
+
+Variables: N2 N4 N6
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {plus_op N1 N2 N3}* -> {nat N3}
+H2 : {nat N2}
+H4 : {plus_op N6 N2 N4}*
+H5 : {nat N6}
+H6 : {nat N4}
+============================
+ {nat (s N4)}
+
+plus_type < search.
+Proof completed.
+Abella < Theorem times_type : 
+forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3} -> {nat N3}.
+
+
+============================
+ forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3} -> {nat N3}
+
+times_type < induction on 3.
+
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3}* ->
+       {nat N3}
+============================
+ forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3}@ -> {nat N3}
+
+times_type < intros.
+
+Variables: N1 N2 N3
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3}* ->
+       {nat N3}
+H1 : {nat N1}
+H2 : {nat N2}
+H3 : {times_op N1 N2 N3}@
+============================
+ {nat N3}
+
+times_type < case H3.
+Subgoal 1:
+
+Variables: N2
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3}* ->
+       {nat N3}
+H1 : {nat z}
+H2 : {nat N2}
+============================
+ {nat z}
+
+Subgoal 2 is:
+ {nat N3}
+
+times_type < search.
+Subgoal 2:
+
+Variables: N2 N3 N4 N6
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3}* ->
+       {nat N3}
+H1 : {nat (s N6)}
+H2 : {nat N2}
+H4 : {times_op N6 N2 N4}*
+H5 : {plus_op N4 N2 N3}*
+============================
+ {nat N3}
+
+times_type < case H1.
+Subgoal 2:
+
+Variables: N2 N3 N4 N6
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3}* ->
+       {nat N3}
+H2 : {nat N2}
+H4 : {times_op N6 N2 N4}*
+H5 : {plus_op N4 N2 N3}*
+H6 : {nat N6}
+============================
+ {nat N3}
+
+times_type < apply IH to H6 H2 H4.
+Subgoal 2:
+
+Variables: N2 N3 N4 N6
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3}* ->
+       {nat N3}
+H2 : {nat N2}
+H4 : {times_op N6 N2 N4}*
+H5 : {plus_op N4 N2 N3}*
+H6 : {nat N6}
+H7 : {nat N4}
+============================
+ {nat N3}
+
+times_type < apply plus_type to H7 H2 H5.
+Subgoal 2:
+
+Variables: N2 N3 N4 N6
+IH : forall N1 N2 N3, {nat N1} -> {nat N2} -> {times_op N1 N2 N3}* ->
+       {nat N3}
+H2 : {nat N2}
+H4 : {times_op N6 N2 N4}*
+H5 : {plus_op N4 N2 N3}*
+H6 : {nat N6}
+H7 : {nat N4}
+H8 : {nat N3}
+============================
+ {nat N3}
+
+times_type < search.
+Proof completed.
+Abella < Theorem cat_type : 
+forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3} ->
+  {string S3}.
+
+
+============================
+ forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3} ->
+   {string S3}
+
+cat_type < induction on 3.
+
+IH : forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3}* ->
+       {string S3}
+============================
+ forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3}@ ->
+   {string S3}
+
+cat_type < intros.
+
+Variables: S1 S2 S3
+IH : forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3}* ->
+       {string S3}
+H1 : {string S1}
+H2 : {string S2}
+H3 : {cat_op S1 S2 S3}@
+============================
+ {string S3}
+
+cat_type < case H3.
+Subgoal 1:
+
+Variables: S3
+IH : forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3}* ->
+       {string S3}
+H1 : {string nill}
+H2 : {string S3}
+============================
+ {string S3}
+
+Subgoal 2 is:
+ {string (cons N L3)}
+
+cat_type < search.
+Subgoal 2:
+
+Variables: S2 L3 L1 N
+IH : forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3}* ->
+       {string S3}
+H1 : {string (cons N L1)}
+H2 : {string S2}
+H4 : {cat_op L1 S2 L3}*
+============================
+ {string (cons N L3)}
+
+cat_type < case H1.
+Subgoal 2:
+
+Variables: S2 L3 L1 N
+IH : forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3}* ->
+       {string S3}
+H2 : {string S2}
+H4 : {cat_op L1 S2 L3}*
+H5 : {nat N}
+H6 : {string L1}
+============================
+ {string (cons N L3)}
+
+cat_type < apply IH to H6 H2 H4.
+Subgoal 2:
+
+Variables: S2 L3 L1 N
+IH : forall S1 S2 S3, {string S1} -> {string S2} -> {cat_op S1 S2 S3}* ->
+       {string S3}
+H2 : {string S2}
+H4 : {cat_op L1 S2 L3}*
+H5 : {nat N}
+H6 : {string L1}
+H7 : {string L3}
+============================
+ {string (cons N L3)}
+
+cat_type < search.
+Proof completed.
+Abella < Theorem len_type : 
+forall S1 N2, {string S1} -> {len_op S1 N2} -> {nat N2}.
+
+
+============================
+ forall S1 N2, {string S1} -> {len_op S1 N2} -> {nat N2}
+
+len_type < induction on 2.
+
+IH : forall S1 N2, {string S1} -> {len_op S1 N2}* -> {nat N2}
+============================
+ forall S1 N2, {string S1} -> {len_op S1 N2}@ -> {nat N2}
+
+len_type < intros.
+
+Variables: S1 N2
+IH : forall S1 N2, {string S1} -> {len_op S1 N2}* -> {nat N2}
+H1 : {string S1}
+H2 : {len_op S1 N2}@
+============================
+ {nat N2}
+
+len_type < case H2.
+Subgoal 1:
+
+IH : forall S1 N2, {string S1} -> {len_op S1 N2}* -> {nat N2}
+H1 : {string nill}
+============================
+ {nat z}
+
+Subgoal 2 is:
+ {nat (s M)}
+
+len_type < search.
+Subgoal 2:
+
+Variables: M L N
+IH : forall S1 N2, {string S1} -> {len_op S1 N2}* -> {nat N2}
+H1 : {string (cons N L)}
+H3 : {len_op L M}*
+============================
+ {nat (s M)}
+
+len_type < case H1.
+Subgoal 2:
+
+Variables: M L N
+IH : forall S1 N2, {string S1} -> {len_op S1 N2}* -> {nat N2}
+H3 : {len_op L M}*
+H4 : {nat N}
+H5 : {string L}
+============================
+ {nat (s M)}
+
+len_type < apply IH to H5 H3.
+Subgoal 2:
+
+Variables: M L N
+IH : forall S1 N2, {string S1} -> {len_op S1 N2}* -> {nat N2}
+H3 : {len_op L M}*
+H4 : {nat N}
+H5 : {string L}
+H6 : {nat M}
+============================
+ {nat (s M)}
+
+len_type < search.
+Proof completed.
+Abella < Theorem plus_total : 
+forall N1 N2, {nat N1} -> {nat N2} -> (exists N3, {plus_op N1 N2 N3}).
+
+
+============================
+ forall N1 N2, {nat N1} -> {nat N2} -> (exists N3, {plus_op N1 N2 N3})
+
+plus_total < induction on 1.
+
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {plus_op N1 N2 N3})
+============================
+ forall N1 N2, {nat N1}@ -> {nat N2} -> (exists N3, {plus_op N1 N2 N3})
+
+plus_total < intros.
+
+Variables: N1 N2
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {plus_op N1 N2 N3})
+H1 : {nat N1}@
+H2 : {nat N2}
+============================
+ exists N3, {plus_op N1 N2 N3}
+
+plus_total < case H1.
+Subgoal 1:
+
+Variables: N2
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {plus_op N1 N2 N3})
+H2 : {nat N2}
+============================
+ exists N3, {plus_op z N2 N3}
+
+Subgoal 2 is:
+ exists N3, {plus_op (s N) N2 N3}
+
+plus_total < search.
+Subgoal 2:
+
+Variables: N2 N
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {plus_op N1 N2 N3})
+H2 : {nat N2}
+H3 : {nat N}*
+============================
+ exists N3, {plus_op (s N) N2 N3}
+
+plus_total < apply IH to H3 H2.
+Subgoal 2:
+
+Variables: N2 N N3
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {plus_op N1 N2 N3})
+H2 : {nat N2}
+H3 : {nat N}*
+H4 : {plus_op N N2 N3}
+============================
+ exists N3, {plus_op (s N) N2 N3}
+
+plus_total < search.
+Proof completed.
+Abella < Theorem times_total : 
+forall N1 N2, {nat N1} -> {nat N2} -> (exists N3, {times_op N1 N2 N3}).
+
+
+============================
+ forall N1 N2, {nat N1} -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+
+times_total < induction on 1.
+
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+============================
+ forall N1 N2, {nat N1}@ -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+
+times_total < intros.
+
+Variables: N1 N2
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+H1 : {nat N1}@
+H2 : {nat N2}
+============================
+ exists N3, {times_op N1 N2 N3}
+
+times_total < case H1.
+Subgoal 1:
+
+Variables: N2
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+H2 : {nat N2}
+============================
+ exists N3, {times_op z N2 N3}
+
+Subgoal 2 is:
+ exists N3, {times_op (s N) N2 N3}
+
+times_total < search.
+Subgoal 2:
+
+Variables: N2 N
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+H2 : {nat N2}
+H3 : {nat N}*
+============================
+ exists N3, {times_op (s N) N2 N3}
+
+times_total < apply IH to H3 H2.
+Subgoal 2:
+
+Variables: N2 N N3
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+H2 : {nat N2}
+H3 : {nat N}*
+H4 : {times_op N N2 N3}
+============================
+ exists N3, {times_op (s N) N2 N3}
+
+times_total < apply times_type to H3 H2 H4.
+Subgoal 2:
+
+Variables: N2 N N3
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+H2 : {nat N2}
+H3 : {nat N}*
+H4 : {times_op N N2 N3}
+H5 : {nat N3}
+============================
+ exists N3, {times_op (s N) N2 N3}
+
+times_total < apply plus_total to H5 H2.
+Subgoal 2:
+
+Variables: N2 N N3 N4
+IH : forall N1 N2, {nat N1}* -> {nat N2} -> (exists N3, {times_op N1 N2 N3})
+H2 : {nat N2}
+H3 : {nat N}*
+H4 : {times_op N N2 N3}
+H5 : {nat N3}
+H6 : {plus_op N3 N2 N4}
+============================
+ exists N3, {times_op (s N) N2 N3}
+
+times_total < search.
+Proof completed.
+Abella < Theorem cat_total : 
+forall S1 S2, {string S1} -> {string S2} -> (exists S3, {cat_op S1 S2 S3}).
+
+
+============================
+ forall S1 S2, {string S1} -> {string S2} -> (exists S3, {cat_op S1 S2 S3})
+
+cat_total < induction on 1.
+
+IH : forall S1 S2, {string S1}* -> {string S2} ->
+       (exists S3, {cat_op S1 S2 S3})
+============================
+ forall S1 S2, {string S1}@ -> {string S2} -> (exists S3, {cat_op S1 S2 S3})
+
+cat_total < intros.
+
+Variables: S1 S2
+IH : forall S1 S2, {string S1}* -> {string S2} ->
+       (exists S3, {cat_op S1 S2 S3})
+H1 : {string S1}@
+H2 : {string S2}
+============================
+ exists S3, {cat_op S1 S2 S3}
+
+cat_total < case H1.
+Subgoal 1:
+
+Variables: S2
+IH : forall S1 S2, {string S1}* -> {string S2} ->
+       (exists S3, {cat_op S1 S2 S3})
+H2 : {string S2}
+============================
+ exists S3, {cat_op nill S2 S3}
+
+Subgoal 2 is:
+ exists S3, {cat_op (cons N L) S2 S3}
+
+cat_total < search.
+Subgoal 2:
+
+Variables: S2 L N
+IH : forall S1 S2, {string S1}* -> {string S2} ->
+       (exists S3, {cat_op S1 S2 S3})
+H2 : {string S2}
+H3 : {nat N}*
+H4 : {string L}*
+============================
+ exists S3, {cat_op (cons N L) S2 S3}
+
+cat_total < apply IH to H4 H2.
+Subgoal 2:
+
+Variables: S2 L N S3
+IH : forall S1 S2, {string S1}* -> {string S2} ->
+       (exists S3, {cat_op S1 S2 S3})
+H2 : {string S2}
+H3 : {nat N}*
+H4 : {string L}*
+H5 : {cat_op L S2 S3}
+============================
+ exists S3, {cat_op (cons N L) S2 S3}
+
+cat_total < search.
+Proof completed.
+Abella < Theorem len_total : 
+forall S1, {string S1} -> (exists N2, {len_op S1 N2}).
+
+
+============================
+ forall S1, {string S1} -> (exists N2, {len_op S1 N2})
+
+len_total < induction on 1.
+
+IH : forall S1, {string S1}* -> (exists N2, {len_op S1 N2})
+============================
+ forall S1, {string S1}@ -> (exists N2, {len_op S1 N2})
+
+len_total < intros.
+
+Variables: S1
+IH : forall S1, {string S1}* -> (exists N2, {len_op S1 N2})
+H1 : {string S1}@
+============================
+ exists N2, {len_op S1 N2}
+
+len_total < case H1.
+Subgoal 1:
+
+IH : forall S1, {string S1}* -> (exists N2, {len_op S1 N2})
+============================
+ exists N2, {len_op nill N2}
+
+Subgoal 2 is:
+ exists N2, {len_op (cons N L) N2}
+
+len_total < search.
+Subgoal 2:
+
+Variables: L N
+IH : forall S1, {string S1}* -> (exists N2, {len_op S1 N2})
+H2 : {nat N}*
+H3 : {string L}*
+============================
+ exists N2, {len_op (cons N L) N2}
+
+len_total < apply IH to H3.
+Subgoal 2:
+
+Variables: L N N2
+IH : forall S1, {string S1}* -> (exists N2, {len_op S1 N2})
+H2 : {nat N}*
+H3 : {string L}*
+H4 : {len_op L N2}
+============================
+ exists N2, {len_op (cons N L) N2}
+
+len_total < search.
+Proof completed.
+Abella < Theorem plus_uniq : 
+forall N1 N2 N3 N3', {plus_op N1 N2 N3} -> {plus_op N1 N2 N3'} -> N3 = N3'.
+
+
+============================
+ forall N1 N2 N3 N3', {plus_op N1 N2 N3} -> {plus_op N1 N2 N3'} -> N3 = N3'
+
+plus_uniq < induction on 1.
+
+IH : forall N1 N2 N3 N3', {plus_op N1 N2 N3}* -> {plus_op N1 N2 N3'} -> N3 =
+     N3'
+============================
+ forall N1 N2 N3 N3', {plus_op N1 N2 N3}@ -> {plus_op N1 N2 N3'} -> N3 = N3'
+
+plus_uniq < intros.
+
+Variables: N1 N2 N3 N3'
+IH : forall N1 N2 N3 N3', {plus_op N1 N2 N3}* -> {plus_op N1 N2 N3'} -> N3 =
+     N3'
+H1 : {plus_op N1 N2 N3}@
+H2 : {plus_op N1 N2 N3'}
+============================
+ N3 = N3'
+
+plus_uniq < case H1.
+Subgoal 1:
+
+Variables: N3 N3'
+IH : forall N1 N2 N3 N3', {plus_op N1 N2 N3}* -> {plus_op N1 N2 N3'} -> N3 =
+     N3'
+H2 : {plus_op z N3 N3'}
+============================
+ N3 = N3'
+
+Subgoal 2 is:
+ s N4 = N3'
+
+plus_uniq < case H2.
+Subgoal 1:
+
+Variables: N3'
+IH : forall N1 N2 N3 N3', {plus_op N1 N2 N3}* -> {plus_op N1 N2 N3'} -> N3 =
+     N3'
+============================
+ N3' = N3'
+
+Subgoal 2 is:
+ s N4 = N3'
+
+plus_uniq < search.
+Subgoal 2:
+
+Variables: N2 N3' N4 N6
+IH : forall N1 N2 N3 N3', {plus_op N1 N2 N3}* -> {plus_op N1 N2 N3'} -> N3 =
+     N3'
+H2 : {plus_op (s N6) N2 N3'}
+H3 : {plus_op N6 N2 N4}*
+============================
+ s N4 = N3'
+
+plus_uniq < case H2.
+Subgoal 2:
+
+Variables: N2 N4 N6 N5
+IH : forall N1 N2 N3 N3', {plus_op N1 N2 N3}* -> {plus_op N1 N2 N3'} -> N3 =
+     N3'
+H3 : {plus_op N6 N2 N4}*
+H4 : {plus_op N6 N2 N5}
+============================
+ s N4 = s N5
+
+plus_uniq < apply IH to H3 H4.
+Subgoal 2:
+
+Variables: N2 N6 N5
+IH : forall N1 N2 N3 N3', {plus_op N1 N2 N3}* -> {plus_op N1 N2 N3'} -> N3 =
+     N3'
+H3 : {plus_op N6 N2 N5}*
+H4 : {plus_op N6 N2 N5}
+============================
+ s N5 = s N5
+
+plus_uniq < search.
+Proof completed.
+Abella < Theorem times_uniq : 
+forall N1 N2 N3 N3', {times_op N1 N2 N3} -> {times_op N1 N2 N3'} -> N3 = N3'.
+
+
+============================
+ forall N1 N2 N3 N3', {times_op N1 N2 N3} -> {times_op N1 N2 N3'} -> N3 = N3'
+
+times_uniq < induction on 1.
+
+IH : forall N1 N2 N3 N3', {times_op N1 N2 N3}* -> {times_op N1 N2 N3'} ->
+       N3 =
+     N3'
+============================
+ forall N1 N2 N3 N3', {times_op N1 N2 N3}@ -> {times_op N1 N2 N3'} -> N3 =
+ N3'
+
+times_uniq < intros.
+
+Variables: N1 N2 N3 N3'
+IH : forall N1 N2 N3 N3', {times_op N1 N2 N3}* -> {times_op N1 N2 N3'} ->
+       N3 =
+     N3'
+H1 : {times_op N1 N2 N3}@
+H2 : {times_op N1 N2 N3'}
+============================
+ N3 = N3'
+
+times_uniq < case H1.
+Subgoal 1:
+
+Variables: N2 N3'
+IH : forall N1 N2 N3 N3', {times_op N1 N2 N3}* -> {times_op N1 N2 N3'} ->
+       N3 =
+     N3'
+H2 : {times_op z N2 N3'}
+============================
+ z = N3'
+
+Subgoal 2 is:
+ N3 = N3'
+
+times_uniq < case H2.
+Subgoal 1:
+
+Variables: N2
+IH : forall N1 N2 N3 N3', {times_op N1 N2 N3}* -> {times_op N1 N2 N3'} ->
+       N3 =
+     N3'
+============================
+ z = z
+
+Subgoal 2 is:
+ N3 = N3'
+
+times_uniq < search.
+Subgoal 2:
+
+Variables: N2 N3 N3' N4 N6
+IH : forall N1 N2 N3 N3', {times_op N1 N2 N3}* -> {times_op N1 N2 N3'} ->
+       N3 =
+     N3'
+H2 : {times_op (s N6) N2 N3'}
+H3 : {times_op N6 N2 N4}*
+H4 : {plus_op N4 N2 N3}*
+============================
+ N3 = N3'
+
+times_uniq < case H2.
+Subgoal 2:
+
+Variables: N2 N3 N3' N4 N6 N5
+IH : forall N1 N2 N3 N3', {times_op N1 N2 N3}* -> {times_op N1 N2 N3'} ->
+       N3 =
+     N3'
+H3 : {times_op N6 N2 N4}*
+H4 : {plus_op N4 N2 N3}*
+H5 : {times_op N6 N2 N5}
+H6 : {plus_op N5 N2 N3'}
+============================
+ N3 = N3'
+
+times_uniq < apply IH to H3 H5.
+Subgoal 2:
+
+Variables: N2 N3 N3' N6 N5
+IH : forall N1 N2 N3 N3', {times_op N1 N2 N3}* -> {times_op N1 N2 N3'} ->
+       N3 =
+     N3'
+H3 : {times_op N6 N2 N5}*
+H4 : {plus_op N5 N2 N3}*
+H5 : {times_op N6 N2 N5}
+H6 : {plus_op N5 N2 N3'}
+============================
+ N3 = N3'
+
+times_uniq < apply plus_uniq to H4 H6.
+Subgoal 2:
+
+Variables: N2 N3' N6 N5
+IH : forall N1 N2 N3 N3', {times_op N1 N2 N3}* -> {times_op N1 N2 N3'} ->
+       N3 =
+     N3'
+H3 : {times_op N6 N2 N5}*
+H4 : {plus_op N5 N2 N3'}*
+H5 : {times_op N6 N2 N5}
+H6 : {plus_op N5 N2 N3'}
+============================
+ N3' = N3'
+
+times_uniq < search.
+Proof completed.
+Abella < Theorem cat_uniq : 
+forall S1 S2 S3 S3', {cat_op S1 S2 S3} -> {cat_op S1 S2 S3'} -> S3 = S3'.
+
+
+============================
+ forall S1 S2 S3 S3', {cat_op S1 S2 S3} -> {cat_op S1 S2 S3'} -> S3 = S3'
+
+cat_uniq < induction on 1.
+
+IH : forall S1 S2 S3 S3', {cat_op S1 S2 S3}* -> {cat_op S1 S2 S3'} -> S3 =
+     S3'
+============================
+ forall S1 S2 S3 S3', {cat_op S1 S2 S3}@ -> {cat_op S1 S2 S3'} -> S3 = S3'
+
+cat_uniq < intros.
+
+Variables: S1 S2 S3 S3'
+IH : forall S1 S2 S3 S3', {cat_op S1 S2 S3}* -> {cat_op S1 S2 S3'} -> S3 =
+     S3'
+H1 : {cat_op S1 S2 S3}@
+H2 : {cat_op S1 S2 S3'}
+============================
+ S3 = S3'
+
+cat_uniq < case H1.
+Subgoal 1:
+
+Variables: S3 S3'
+IH : forall S1 S2 S3 S3', {cat_op S1 S2 S3}* -> {cat_op S1 S2 S3'} -> S3 =
+     S3'
+H2 : {cat_op nill S3 S3'}
+============================
+ S3 = S3'
+
+Subgoal 2 is:
+ cons N L3 = S3'
+
+cat_uniq < case H2.
+Subgoal 1:
+
+Variables: S3'
+IH : forall S1 S2 S3 S3', {cat_op S1 S2 S3}* -> {cat_op S1 S2 S3'} -> S3 =
+     S3'
+============================
+ S3' = S3'
+
+Subgoal 2 is:
+ cons N L3 = S3'
+
+cat_uniq < search.
+Subgoal 2:
+
+Variables: S2 S3' L3 L1 N
+IH : forall S1 S2 S3 S3', {cat_op S1 S2 S3}* -> {cat_op S1 S2 S3'} -> S3 =
+     S3'
+H2 : {cat_op (cons N L1) S2 S3'}
+H3 : {cat_op L1 S2 L3}*
+============================
+ cons N L3 = S3'
+
+cat_uniq < case H2.
+Subgoal 2:
+
+Variables: S2 L3 L1 N L2
+IH : forall S1 S2 S3 S3', {cat_op S1 S2 S3}* -> {cat_op S1 S2 S3'} -> S3 =
+     S3'
+H3 : {cat_op L1 S2 L3}*
+H4 : {cat_op L1 S2 L2}
+============================
+ cons N L3 = cons N L2
+
+cat_uniq < apply IH to H3 H4.
+Subgoal 2:
+
+Variables: S2 L1 N L2
+IH : forall S1 S2 S3 S3', {cat_op S1 S2 S3}* -> {cat_op S1 S2 S3'} -> S3 =
+     S3'
+H3 : {cat_op L1 S2 L2}*
+H4 : {cat_op L1 S2 L2}
+============================
+ cons N L2 = cons N L2
+
+cat_uniq < search.
+Proof completed.
+Abella < Theorem len_uniq : 
+forall S1 N2 N2', {len_op S1 N2} -> {len_op S1 N2'} -> N2 = N2'.
+
+
+============================
+ forall S1 N2 N2', {len_op S1 N2} -> {len_op S1 N2'} -> N2 = N2'
+
+len_uniq < induction on 1.
+
+IH : forall S1 N2 N2', {len_op S1 N2}* -> {len_op S1 N2'} -> N2 = N2'
+============================
+ forall S1 N2 N2', {len_op S1 N2}@ -> {len_op S1 N2'} -> N2 = N2'
+
+len_uniq < intros.
+
+Variables: S1 N2 N2'
+IH : forall S1 N2 N2', {len_op S1 N2}* -> {len_op S1 N2'} -> N2 = N2'
+H1 : {len_op S1 N2}@
+H2 : {len_op S1 N2'}
+============================
+ N2 = N2'
+
+len_uniq < case H1.
+Subgoal 1:
+
+Variables: N2'
+IH : forall S1 N2 N2', {len_op S1 N2}* -> {len_op S1 N2'} -> N2 = N2'
+H2 : {len_op nill N2'}
+============================
+ z = N2'
+
+Subgoal 2 is:
+ s M = N2'
+
+len_uniq < case H2.
+Subgoal 1:
+
+IH : forall S1 N2 N2', {len_op S1 N2}* -> {len_op S1 N2'} -> N2 = N2'
+============================
+ z = z
+
+Subgoal 2 is:
+ s M = N2'
+
+len_uniq < search.
+Subgoal 2:
+
+Variables: N2' M L N
+IH : forall S1 N2 N2', {len_op S1 N2}* -> {len_op S1 N2'} -> N2 = N2'
+H2 : {len_op (cons N L) N2'}
+H3 : {len_op L M}*
+============================
+ s M = N2'
+
+len_uniq < case H2.
+Subgoal 2:
+
+Variables: M L N M1
+IH : forall S1 N2 N2', {len_op S1 N2}* -> {len_op S1 N2'} -> N2 = N2'
+H3 : {len_op L M}*
+H4 : {len_op L M1}
+============================
+ s M = s M1
+
+len_uniq < apply IH to H3 H4.
+Subgoal 2:
+
+Variables: L N M1
+IH : forall S1 N2 N2', {len_op S1 N2}* -> {len_op S1 N2'} -> N2 = N2'
+H3 : {len_op L M1}*
+H4 : {len_op L M1}
+============================
+ s M1 = s M1
+
+len_uniq < search.
+Proof completed.
+Abella < Theorem plus_s : 
+forall N1 N2 N3, {plus_op N1 N2 N3} -> {plus_op N1 (s N2) (s N3)}.
+
+
+============================
+ forall N1 N2 N3, {plus_op N1 N2 N3} -> {plus_op N1 (s N2) (s N3)}
+
+plus_s < induction on 1.
+
+IH : forall N1 N2 N3, {plus_op N1 N2 N3}* -> {plus_op N1 (s N2) (s N3)}
+============================
+ forall N1 N2 N3, {plus_op N1 N2 N3}@ -> {plus_op N1 (s N2) (s N3)}
+
+plus_s < intros.
+
+Variables: N1 N2 N3
+IH : forall N1 N2 N3, {plus_op N1 N2 N3}* -> {plus_op N1 (s N2) (s N3)}
+H1 : {plus_op N1 N2 N3}@
+============================
+ {plus_op N1 (s N2) (s N3)}
+
+plus_s < case H1.
+Subgoal 1:
+
+Variables: N3
+IH : forall N1 N2 N3, {plus_op N1 N2 N3}* -> {plus_op N1 (s N2) (s N3)}
+============================
+ {plus_op z (s N3) (s N3)}
+
+Subgoal 2 is:
+ {plus_op (s N6) (s N2) (s (s N4))}
+
+plus_s < search.
+Subgoal 2:
+
+Variables: N2 N4 N6
+IH : forall N1 N2 N3, {plus_op N1 N2 N3}* -> {plus_op N1 (s N2) (s N3)}
+H2 : {plus_op N6 N2 N4}*
+============================
+ {plus_op (s N6) (s N2) (s (s N4))}
+
+plus_s < apply IH to H2.
+Subgoal 2:
+
+Variables: N2 N4 N6
+IH : forall N1 N2 N3, {plus_op N1 N2 N3}* -> {plus_op N1 (s N2) (s N3)}
+H2 : {plus_op N6 N2 N4}*
+H3 : {plus_op N6 (s N2) (s N4)}
+============================
+ {plus_op (s N6) (s N2) (s (s N4))}
+
+plus_s < search.
+Proof completed.
+Abella < Theorem member_prune [A,B] : 
+forall M L, nabla x, member (M x) L -> (exists M', M = y\M').
+
+
+============================
+ forall M L, nabla x, member (M x) L -> (exists M', M = y\M')
+
+member_prune < induction on 1.
+
+IH : forall M L, nabla x, member (M x) L * -> (exists M', M = y\M')
+============================
+ forall M L, nabla x, member (M x) L @ -> (exists M', M = y\M')
+
+member_prune < intros.
+
+Variables: M L
+IH : forall M L, nabla x, member (M x) L * -> (exists M', M = y\M')
+H1 : member (M n1) L @
+============================
+ exists M', M = y\M'
+
+member_prune < case H1.
+Subgoal 1:
+
+Variables: L3 L2
+IH : forall M L, nabla x, member (M x) L * -> (exists M', M = y\M')
+============================
+ exists M', z1\L2 = y\M'
+
+Subgoal 2 is:
+ exists M', M = y\M'
+
+member_prune < search.
+Subgoal 2:
+
+Variables: M L3 L2
+IH : forall M L, nabla x, member (M x) L * -> (exists M', M = y\M')
+H2 : member (M n1) L3 *
+============================
+ exists M', M = y\M'
+
+member_prune < apply IH to H2.
+Subgoal 2:
+
+Variables: L3 L2 M'
+IH : forall M L, nabla x, member (M x) L * -> (exists M', M = y\M')
+H2 : member M' L3 *
+============================
+ exists M'1, z1\M' = y\M'1
+
+member_prune < search.
+Proof completed.
+Abella < Define var : A -> prop by 
+nabla x, var x.
+
+Abella < Close nat,string.
+
+Abella < 

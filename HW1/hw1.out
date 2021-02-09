@@ -1,0 +1,3433 @@
+Welcome to Abella 2.0.6.
+Abella < Specification "hw1".
+Reading specification "hw1".
+
+Abella < Theorem leq21 : 
+forall N, {nat N} -> {leq N N}.
+
+
+============================
+ forall N, {nat N} -> {leq N N}
+
+leq21 < induction on 1.
+
+IH : forall N, {nat N}* -> {leq N N}
+============================
+ forall N, {nat N}@ -> {leq N N}
+
+leq21 < intros.
+
+Variables: N
+IH : forall N, {nat N}* -> {leq N N}
+H1 : {nat N}@
+============================
+ {leq N N}
+
+leq21 < case H1.
+Subgoal 1:
+
+IH : forall N, {nat N}* -> {leq N N}
+============================
+ {leq z z}
+
+Subgoal 2 is:
+ {leq (s N1) (s N1)}
+
+leq21 < search.
+Subgoal 2:
+
+Variables: N1
+IH : forall N, {nat N}* -> {leq N N}
+H2 : {nat N1}*
+============================
+ {leq (s N1) (s N1)}
+
+leq21 < apply IH to H2.
+Subgoal 2:
+
+Variables: N1
+IH : forall N, {nat N}* -> {leq N N}
+H2 : {nat N1}*
+H3 : {leq N1 N1}
+============================
+ {leq (s N1) (s N1)}
+
+leq21 < search.
+Proof completed.
+Abella < Theorem leq22 : 
+forall N M, {leq N M} -> {leq N (s M)}.
+
+
+============================
+ forall N M, {leq N M} -> {leq N (s M)}
+
+leq22 < induction on 1.
+
+IH : forall N M, {leq N M}* -> {leq N (s M)}
+============================
+ forall N M, {leq N M}@ -> {leq N (s M)}
+
+leq22 < intros.
+
+Variables: N M
+IH : forall N M, {leq N M}* -> {leq N (s M)}
+H1 : {leq N M}@
+============================
+ {leq N (s M)}
+
+leq22 < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M, {leq N M}* -> {leq N (s M)}
+H2 : {nat M}*
+============================
+ {leq z (s M)}
+
+Subgoal 2 is:
+ {leq (s N1) (s (s M1))}
+
+leq22 < search.
+Subgoal 2:
+
+Variables: M1 N1
+IH : forall N M, {leq N M}* -> {leq N (s M)}
+H2 : {leq N1 M1}*
+============================
+ {leq (s N1) (s (s M1))}
+
+leq22 < apply IH to H2.
+Subgoal 2:
+
+Variables: M1 N1
+IH : forall N M, {leq N M}* -> {leq N (s M)}
+H2 : {leq N1 M1}*
+H3 : {leq N1 (s M1)}
+============================
+ {leq (s N1) (s (s M1))}
+
+leq22 < search.
+Proof completed.
+Abella < Theorem leq_nat : 
+forall N M, {leq N M} -> {nat M}.
+
+
+============================
+ forall N M, {leq N M} -> {nat M}
+
+leq_nat < induction on 1.
+
+IH : forall N M, {leq N M}* -> {nat M}
+============================
+ forall N M, {leq N M}@ -> {nat M}
+
+leq_nat < intros.
+
+Variables: N M
+IH : forall N M, {leq N M}* -> {nat M}
+H1 : {leq N M}@
+============================
+ {nat M}
+
+leq_nat < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M, {leq N M}* -> {nat M}
+H2 : {nat M}*
+============================
+ {nat M}
+
+Subgoal 2 is:
+ {nat (s M1)}
+
+leq_nat < search.
+Subgoal 2:
+
+Variables: M1 N1
+IH : forall N M, {leq N M}* -> {nat M}
+H2 : {leq N1 M1}*
+============================
+ {nat (s M1)}
+
+leq_nat < apply IH to H2.
+Subgoal 2:
+
+Variables: M1 N1
+IH : forall N M, {leq N M}* -> {nat M}
+H2 : {leq N1 M1}*
+H3 : {nat M1}
+============================
+ {nat (s M1)}
+
+leq_nat < search.
+Proof completed.
+Abella < Theorem leq_trans : 
+forall N M R, {leq N M} -> {leq M R} -> {leq N R}.
+
+
+============================
+ forall N M R, {leq N M} -> {leq M R} -> {leq N R}
+
+leq_trans < induction on 1.
+
+IH : forall N M R, {leq N M}* -> {leq M R} -> {leq N R}
+============================
+ forall N M R, {leq N M}@ -> {leq M R} -> {leq N R}
+
+leq_trans < intros.
+
+Variables: N M R
+IH : forall N M R, {leq N M}* -> {leq M R} -> {leq N R}
+H1 : {leq N M}@
+H2 : {leq M R}
+============================
+ {leq N R}
+
+leq_trans < case H1.
+Subgoal 1:
+
+Variables: M R
+IH : forall N M R, {leq N M}* -> {leq M R} -> {leq N R}
+H2 : {leq M R}
+H3 : {nat M}*
+============================
+ {leq z R}
+
+Subgoal 2 is:
+ {leq (s N1) R}
+
+leq_trans < apply leq_nat to H2.
+Subgoal 1:
+
+Variables: M R
+IH : forall N M R, {leq N M}* -> {leq M R} -> {leq N R}
+H2 : {leq M R}
+H3 : {nat M}*
+H4 : {nat R}
+============================
+ {leq z R}
+
+Subgoal 2 is:
+ {leq (s N1) R}
+
+leq_trans < search.
+Subgoal 2:
+
+Variables: R M1 N1
+IH : forall N M R, {leq N M}* -> {leq M R} -> {leq N R}
+H2 : {leq (s M1) R}
+H3 : {leq N1 M1}*
+============================
+ {leq (s N1) R}
+
+leq_trans < case H2.
+Subgoal 2:
+
+Variables: M1 N1 M2
+IH : forall N M R, {leq N M}* -> {leq M R} -> {leq N R}
+H3 : {leq N1 M1}*
+H4 : {leq M1 M2}
+============================
+ {leq (s N1) (s M2)}
+
+leq_trans < apply IH to H3 H4.
+Subgoal 2:
+
+Variables: M1 N1 M2
+IH : forall N M R, {leq N M}* -> {leq M R} -> {leq N R}
+H3 : {leq N1 M1}*
+H4 : {leq M1 M2}
+H5 : {leq N1 M2}
+============================
+ {leq (s N1) (s M2)}
+
+leq_trans < search.
+Proof completed.
+Abella < Theorem plus_inc1 : 
+forall N M R, {plus N M R} -> {leq N R}.
+
+
+============================
+ forall N M R, {plus N M R} -> {leq N R}
+
+plus_inc1 < induction on 1.
+
+IH : forall N M R, {plus N M R}* -> {leq N R}
+============================
+ forall N M R, {plus N M R}@ -> {leq N R}
+
+plus_inc1 < intros.
+
+Variables: N M R
+IH : forall N M R, {plus N M R}* -> {leq N R}
+H1 : {plus N M R}@
+============================
+ {leq N R}
+
+plus_inc1 < case H1.
+Subgoal 1:
+
+Variables: R
+IH : forall N M R, {plus N M R}* -> {leq N R}
+H2 : {nat R}*
+============================
+ {leq z R}
+
+Subgoal 2 is:
+ {leq (s N1) (s R1)}
+
+plus_inc1 < search.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {leq N R}
+H2 : {plus N1 M R1}*
+============================
+ {leq (s N1) (s R1)}
+
+plus_inc1 < apply IH to H2.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {leq N R}
+H2 : {plus N1 M R1}*
+H3 : {leq N1 R1}
+============================
+ {leq (s N1) (s R1)}
+
+plus_inc1 < search.
+Proof completed.
+Abella < Theorem plus_inc2 : 
+forall N M R, {plus N M R} -> {leq M R}.
+
+
+============================
+ forall N M R, {plus N M R} -> {leq M R}
+
+plus_inc2 < induction on 1.
+
+IH : forall N M R, {plus N M R}* -> {leq M R}
+============================
+ forall N M R, {plus N M R}@ -> {leq M R}
+
+plus_inc2 < intros.
+
+Variables: N M R
+IH : forall N M R, {plus N M R}* -> {leq M R}
+H1 : {plus N M R}@
+============================
+ {leq M R}
+
+plus_inc2 < case H1.
+Subgoal 1:
+
+Variables: R
+IH : forall N M R, {plus N M R}* -> {leq M R}
+H2 : {nat R}*
+============================
+ {leq R R}
+
+Subgoal 2 is:
+ {leq M (s R1)}
+
+plus_inc2 < apply leq21 to H2.
+Subgoal 1:
+
+Variables: R
+IH : forall N M R, {plus N M R}* -> {leq M R}
+H2 : {nat R}*
+H3 : {leq R R}
+============================
+ {leq R R}
+
+Subgoal 2 is:
+ {leq M (s R1)}
+
+plus_inc2 < search.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {leq M R}
+H2 : {plus N1 M R1}*
+============================
+ {leq M (s R1)}
+
+plus_inc2 < apply IH to H2.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {leq M R}
+H2 : {plus N1 M R1}*
+H3 : {leq M R1}
+============================
+ {leq M (s R1)}
+
+plus_inc2 < apply leq22 to H3.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {leq M R}
+H2 : {plus N1 M R1}*
+H3 : {leq M R1}
+H4 : {leq M (s R1)}
+============================
+ {leq M (s R1)}
+
+plus_inc2 < search.
+Proof completed.
+Abella < Theorem plus_mono : 
+forall N1 N2 M1 M2 R1 R2, {leq N1 N2} -> {leq M1 M2} -> {plus N1 M1 R1} ->
+  {plus N2 M2 R2} -> {leq R1 R2}.
+
+
+============================
+ forall N1 N2 M1 M2 R1 R2, {leq N1 N2} -> {leq M1 M2} -> {plus N1 M1 R1} ->
+   {plus N2 M2 R2} -> {leq R1 R2}
+
+plus_mono < induction on 1.
+
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+============================
+ forall N1 N2 M1 M2 R1 R2, {leq N1 N2}@ -> {leq M1 M2} -> {plus N1 M1 R1} ->
+   {plus N2 M2 R2} -> {leq R1 R2}
+
+plus_mono < intros.
+
+Variables: N1 N2 M1 M2 R1 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H1 : {leq N1 N2}@
+H2 : {leq M1 M2}
+H3 : {plus N1 M1 R1}
+H4 : {plus N2 M2 R2}
+============================
+ {leq R1 R2}
+
+plus_mono < case H1.
+Subgoal 1:
+
+Variables: N2 M1 M2 R1 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H3 : {plus z M1 R1}
+H4 : {plus N2 M2 R2}
+H5 : {nat N2}*
+============================
+ {leq R1 R2}
+
+Subgoal 2 is:
+ {leq R1 R2}
+
+plus_mono < case H3.
+Subgoal 1:
+
+Variables: N2 M2 R1 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H2 : {leq R1 M2}
+H4 : {plus N2 M2 R2}
+H5 : {nat N2}*
+H6 : {nat R1}
+============================
+ {leq R1 R2}
+
+Subgoal 2 is:
+ {leq R1 R2}
+
+plus_mono < apply plus_inc2 to H4.
+Subgoal 1:
+
+Variables: N2 M2 R1 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H2 : {leq R1 M2}
+H4 : {plus N2 M2 R2}
+H5 : {nat N2}*
+H6 : {nat R1}
+H7 : {leq M2 R2}
+============================
+ {leq R1 R2}
+
+Subgoal 2 is:
+ {leq R1 R2}
+
+plus_mono < apply leq_trans to H2 H7.
+Subgoal 1:
+
+Variables: N2 M2 R1 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H2 : {leq R1 M2}
+H4 : {plus N2 M2 R2}
+H5 : {nat N2}*
+H6 : {nat R1}
+H7 : {leq M2 R2}
+H8 : {leq R1 R2}
+============================
+ {leq R1 R2}
+
+Subgoal 2 is:
+ {leq R1 R2}
+
+plus_mono < search.
+Subgoal 2:
+
+Variables: M1 M2 R1 R2 M N
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H3 : {plus (s N) M1 R1}
+H4 : {plus (s M) M2 R2}
+H5 : {leq N M}*
+============================
+ {leq R1 R2}
+
+plus_mono < case H3.
+Subgoal 2:
+
+Variables: M1 M2 R2 M N R
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H4 : {plus (s M) M2 R2}
+H5 : {leq N M}*
+H6 : {plus N M1 R}
+============================
+ {leq (s R) R2}
+
+plus_mono < case H4.
+Subgoal 2:
+
+Variables: M1 M2 M N R R3
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H5 : {leq N M}*
+H6 : {plus N M1 R}
+H7 : {plus M M2 R3}
+============================
+ {leq (s R) (s R3)}
+
+plus_mono < apply IH to H5 H2 H6 H7.
+Subgoal 2:
+
+Variables: M1 M2 M N R R3
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {plus N1 M1 R1} -> {plus N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H5 : {leq N M}*
+H6 : {plus N M1 R}
+H7 : {plus M M2 R3}
+H8 : {leq R R3}
+============================
+ {leq (s R) (s R3)}
+
+plus_mono < search.
+Proof completed.
+Abella < Theorem plus21 : 
+forall N, {nat N} -> {plus N z N}.
+
+
+============================
+ forall N, {nat N} -> {plus N z N}
+
+plus21 < induction on 1.
+
+IH : forall N, {nat N}* -> {plus N z N}
+============================
+ forall N, {nat N}@ -> {plus N z N}
+
+plus21 < intros.
+
+Variables: N
+IH : forall N, {nat N}* -> {plus N z N}
+H1 : {nat N}@
+============================
+ {plus N z N}
+
+plus21 < case H1.
+Subgoal 1:
+
+IH : forall N, {nat N}* -> {plus N z N}
+============================
+ {plus z z z}
+
+Subgoal 2 is:
+ {plus (s N1) z (s N1)}
+
+plus21 < search.
+Subgoal 2:
+
+Variables: N1
+IH : forall N, {nat N}* -> {plus N z N}
+H2 : {nat N1}*
+============================
+ {plus (s N1) z (s N1)}
+
+plus21 < apply IH to H2.
+Subgoal 2:
+
+Variables: N1
+IH : forall N, {nat N}* -> {plus N z N}
+H2 : {nat N1}*
+H3 : {plus N1 z N1}
+============================
+ {plus (s N1) z (s N1)}
+
+plus21 < search.
+Proof completed.
+Abella < Theorem plus22 : 
+forall N M R, {plus N M R} -> {plus N (s M) (s R)}.
+
+
+============================
+ forall N M R, {plus N M R} -> {plus N (s M) (s R)}
+
+plus22 < induction on 1.
+
+IH : forall N M R, {plus N M R}* -> {plus N (s M) (s R)}
+============================
+ forall N M R, {plus N M R}@ -> {plus N (s M) (s R)}
+
+plus22 < intros.
+
+Variables: N M R
+IH : forall N M R, {plus N M R}* -> {plus N (s M) (s R)}
+H1 : {plus N M R}@
+============================
+ {plus N (s M) (s R)}
+
+plus22 < case H1.
+Subgoal 1:
+
+Variables: R
+IH : forall N M R, {plus N M R}* -> {plus N (s M) (s R)}
+H2 : {nat R}*
+============================
+ {plus z (s R) (s R)}
+
+Subgoal 2 is:
+ {plus (s N1) (s M) (s (s R1))}
+
+plus22 < search.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {plus N (s M) (s R)}
+H2 : {plus N1 M R1}*
+============================
+ {plus (s N1) (s M) (s (s R1))}
+
+plus22 < apply IH to H2.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {plus N (s M) (s R)}
+H2 : {plus N1 M R1}*
+H3 : {plus N1 (s M) (s R1)}
+============================
+ {plus (s N1) (s M) (s (s R1))}
+
+plus22 < search.
+Proof completed.
+Abella < Theorem plus21_inv : 
+forall N M, {plus N z M} -> N = M.
+
+
+============================
+ forall N M, {plus N z M} -> N = M
+
+plus21_inv < induction on 1.
+
+IH : forall N M, {plus N z M}* -> N = M
+============================
+ forall N M, {plus N z M}@ -> N = M
+
+plus21_inv < intros.
+
+Variables: N M
+IH : forall N M, {plus N z M}* -> N = M
+H1 : {plus N z M}@
+============================
+ N = M
+
+plus21_inv < case H1.
+Subgoal 1:
+
+IH : forall N M, {plus N z M}* -> N = M
+H2 : {nat z}*
+============================
+ z = z
+
+Subgoal 2 is:
+ s N1 = s R
+
+plus21_inv < search.
+Subgoal 2:
+
+Variables: R N1
+IH : forall N M, {plus N z M}* -> N = M
+H2 : {plus N1 z R}*
+============================
+ s N1 = s R
+
+plus21_inv < apply IH to H2.
+Subgoal 2:
+
+Variables: R
+IH : forall N M, {plus N z M}* -> N = M
+H2 : {plus R z R}*
+============================
+ s R = s R
+
+plus21_inv < search.
+Proof completed.
+Abella < Theorem plus22_inv : 
+forall N M R, {plus N (s M) R} -> (exists R', R = s R' /\ {plus N M R'}).
+
+
+============================
+ forall N M R, {plus N (s M) R} -> (exists R', R = s R' /\ {plus N M R'})
+
+plus22_inv < induction on 1.
+
+IH : forall N M R, {plus N (s M) R}* ->
+       (exists R', R = s R' /\ {plus N M R'})
+============================
+ forall N M R, {plus N (s M) R}@ -> (exists R', R = s R' /\ {plus N M R'})
+
+plus22_inv < intros.
+
+Variables: N M R
+IH : forall N M R, {plus N (s M) R}* ->
+       (exists R', R = s R' /\ {plus N M R'})
+H1 : {plus N (s M) R}@
+============================
+ exists R', R = s R' /\ {plus N M R'}
+
+plus22_inv < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R, {plus N (s M) R}* ->
+       (exists R', R = s R' /\ {plus N M R'})
+H2 : {nat (s M)}*
+============================
+ exists R', s M = s R' /\ {plus z M R'}
+
+Subgoal 2 is:
+ exists R', s R1 = s R' /\ {plus (s N1) M R'}
+
+plus22_inv < case H2.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R, {plus N (s M) R}* ->
+       (exists R', R = s R' /\ {plus N M R'})
+H3 : {nat M}*
+============================
+ exists R', s M = s R' /\ {plus z M R'}
+
+Subgoal 2 is:
+ exists R', s R1 = s R' /\ {plus (s N1) M R'}
+
+plus22_inv < search.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N (s M) R}* ->
+       (exists R', R = s R' /\ {plus N M R'})
+H2 : {plus N1 (s M) R1}*
+============================
+ exists R', s R1 = s R' /\ {plus (s N1) M R'}
+
+plus22_inv < apply IH to H2.
+Subgoal 2:
+
+Variables: M N1 R'
+IH : forall N M R, {plus N (s M) R}* ->
+       (exists R', R = s R' /\ {plus N M R'})
+H2 : {plus N1 (s M) (s R')}*
+H3 : {plus N1 M R'}
+============================
+ exists R'1, s (s R') = s R'1 /\ {plus (s N1) M R'1}
+
+plus22_inv < search.
+Proof completed.
+Abella < Theorem order_suff1 : 
+forall N R, {leq N R} -> (exists M, {plus N M R}).
+
+
+============================
+ forall N R, {leq N R} -> (exists M, {plus N M R})
+
+order_suff1 < induction on 1.
+
+IH : forall N R, {leq N R}* -> (exists M, {plus N M R})
+============================
+ forall N R, {leq N R}@ -> (exists M, {plus N M R})
+
+order_suff1 < intros.
+
+Variables: N R
+IH : forall N R, {leq N R}* -> (exists M, {plus N M R})
+H1 : {leq N R}@
+============================
+ exists M, {plus N M R}
+
+order_suff1 < case H1.
+Subgoal 1:
+
+Variables: R
+IH : forall N R, {leq N R}* -> (exists M, {plus N M R})
+H2 : {nat R}*
+============================
+ exists M, {plus z M R}
+
+Subgoal 2 is:
+ exists M1, {plus (s N1) M1 (s M)}
+
+order_suff1 < search.
+Subgoal 2:
+
+Variables: M N1
+IH : forall N R, {leq N R}* -> (exists M, {plus N M R})
+H2 : {leq N1 M}*
+============================
+ exists M1, {plus (s N1) M1 (s M)}
+
+order_suff1 < apply IH to H2.
+Subgoal 2:
+
+Variables: M N1 M1
+IH : forall N R, {leq N R}* -> (exists M, {plus N M R})
+H2 : {leq N1 M}*
+H3 : {plus N1 M1 M}
+============================
+ exists M1, {plus (s N1) M1 (s M)}
+
+order_suff1 < search.
+Proof completed.
+Abella < Theorem order_suff2 : 
+forall M R, {leq M R} -> (exists N, {plus N M R}).
+
+
+============================
+ forall M R, {leq M R} -> (exists N, {plus N M R})
+
+order_suff2 < induction on 1.
+
+IH : forall M R, {leq M R}* -> (exists N, {plus N M R})
+============================
+ forall M R, {leq M R}@ -> (exists N, {plus N M R})
+
+order_suff2 < intros.
+
+Variables: M R
+IH : forall M R, {leq M R}* -> (exists N, {plus N M R})
+H1 : {leq M R}@
+============================
+ exists N, {plus N M R}
+
+order_suff2 < case H1.
+Subgoal 1:
+
+Variables: R
+IH : forall M R, {leq M R}* -> (exists N, {plus N M R})
+H2 : {nat R}*
+============================
+ exists N, {plus N z R}
+
+Subgoal 2 is:
+ exists N1, {plus N1 (s N) (s M1)}
+
+order_suff2 < apply plus21 to H2.
+Subgoal 1:
+
+Variables: R
+IH : forall M R, {leq M R}* -> (exists N, {plus N M R})
+H2 : {nat R}*
+H3 : {plus R z R}
+============================
+ exists N, {plus N z R}
+
+Subgoal 2 is:
+ exists N1, {plus N1 (s N) (s M1)}
+
+order_suff2 < search.
+Subgoal 2:
+
+Variables: M1 N
+IH : forall M R, {leq M R}* -> (exists N, {plus N M R})
+H2 : {leq N M1}*
+============================
+ exists N1, {plus N1 (s N) (s M1)}
+
+order_suff2 < apply IH to H2.
+Subgoal 2:
+
+Variables: M1 N N1
+IH : forall M R, {leq M R}* -> (exists N, {plus N M R})
+H2 : {leq N M1}*
+H3 : {plus N1 N M1}
+============================
+ exists N1, {plus N1 (s N) (s M1)}
+
+order_suff2 < apply plus22 to H3.
+Subgoal 2:
+
+Variables: M1 N N1
+IH : forall M R, {leq M R}* -> (exists N, {plus N M R})
+H2 : {leq N M1}*
+H3 : {plus N1 N M1}
+H4 : {plus N1 (s N) (s M1)}
+============================
+ exists N1, {plus N1 (s N) (s M1)}
+
+order_suff2 < search.
+Proof completed.
+Abella < Theorem plus_nat : 
+forall N M R, {plus N M R} -> {nat N} /\ {nat M} /\ {nat R}.
+
+
+============================
+ forall N M R, {plus N M R} -> {nat N} /\ {nat M} /\ {nat R}
+
+plus_nat < induction on 1.
+
+IH : forall N M R, {plus N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+============================
+ forall N M R, {plus N M R}@ -> {nat N} /\ {nat M} /\ {nat R}
+
+plus_nat < intros.
+
+Variables: N M R
+IH : forall N M R, {plus N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H1 : {plus N M R}@
+============================
+ {nat N} /\ {nat M} /\ {nat R}
+
+plus_nat < case H1.
+Subgoal 1:
+
+Variables: R
+IH : forall N M R, {plus N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H2 : {nat R}*
+============================
+ {nat z} /\ {nat R} /\ {nat R}
+
+Subgoal 2 is:
+ {nat (s N1)} /\ {nat M} /\ {nat (s R1)}
+
+plus_nat < search.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H2 : {plus N1 M R1}*
+============================
+ {nat (s N1)} /\ {nat M} /\ {nat (s R1)}
+
+plus_nat < apply IH to H2.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H2 : {plus N1 M R1}*
+H3 : {nat N1}
+H4 : {nat M}
+H5 : {nat R1}
+============================
+ {nat (s N1)} /\ {nat M} /\ {nat (s R1)}
+
+plus_nat < search.
+Proof completed.
+Abella < Theorem times_nat : 
+forall N M R, {times N M R} -> {nat N} /\ {nat M} /\ {nat R}.
+
+
+============================
+ forall N M R, {times N M R} -> {nat N} /\ {nat M} /\ {nat R}
+
+times_nat < induction on 1.
+
+IH : forall N M R, {times N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+============================
+ forall N M R, {times N M R}@ -> {nat N} /\ {nat M} /\ {nat R}
+
+times_nat < intros.
+
+Variables: N M R
+IH : forall N M R, {times N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H1 : {times N M R}@
+============================
+ {nat N} /\ {nat M} /\ {nat R}
+
+times_nat < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R, {times N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H2 : {nat M}*
+============================
+ {nat z} /\ {nat M} /\ {nat z}
+
+Subgoal 2 is:
+ {nat (s N1)} /\ {nat M} /\ {nat R}
+
+times_nat < search.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H2 : {times N1 M NM}*
+H3 : {plus NM M R}*
+============================
+ {nat (s N1)} /\ {nat M} /\ {nat R}
+
+times_nat < apply IH to H2.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H2 : {times N1 M NM}*
+H3 : {plus NM M R}*
+H4 : {nat N1}
+H5 : {nat M}
+H6 : {nat NM}
+============================
+ {nat (s N1)} /\ {nat M} /\ {nat R}
+
+times_nat < apply plus_nat to H3.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N M R}* -> {nat N} /\ {nat M} /\ {nat R}
+H2 : {times N1 M NM}*
+H3 : {plus NM M R}*
+H4 : {nat N1}
+H5 : {nat M}
+H6 : {nat NM}
+H7 : {nat NM}
+H8 : {nat M}
+H9 : {nat R}
+============================
+ {nat (s N1)} /\ {nat M} /\ {nat R}
+
+times_nat < search.
+Proof completed.
+Abella < Theorem times_mono : 
+forall N1 N2 M1 M2 R1 R2, {leq N1 N2} -> {leq M1 M2} -> {times N1 M1 R1} ->
+  {times N2 M2 R2} -> {leq R1 R2}.
+
+
+============================
+ forall N1 N2 M1 M2 R1 R2, {leq N1 N2} -> {leq M1 M2} -> {times N1 M1 R1} ->
+   {times N2 M2 R2} -> {leq R1 R2}
+
+times_mono < induction on 1.
+
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+============================
+ forall N1 N2 M1 M2 R1 R2, {leq N1 N2}@ -> {leq M1 M2} -> {times N1 M1 R1} ->
+   {times N2 M2 R2} -> {leq R1 R2}
+
+times_mono < intros.
+
+Variables: N1 N2 M1 M2 R1 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H1 : {leq N1 N2}@
+H2 : {leq M1 M2}
+H3 : {times N1 M1 R1}
+H4 : {times N2 M2 R2}
+============================
+ {leq R1 R2}
+
+times_mono < case H1.
+Subgoal 1:
+
+Variables: N2 M1 M2 R1 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H3 : {times z M1 R1}
+H4 : {times N2 M2 R2}
+H5 : {nat N2}*
+============================
+ {leq R1 R2}
+
+Subgoal 2 is:
+ {leq R1 R2}
+
+times_mono < case H3.
+Subgoal 1:
+
+Variables: N2 M1 M2 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H4 : {times N2 M2 R2}
+H5 : {nat N2}*
+H6 : {nat M1}
+============================
+ {leq z R2}
+
+Subgoal 2 is:
+ {leq R1 R2}
+
+times_mono < apply times_nat to H4.
+Subgoal 1:
+
+Variables: N2 M1 M2 R2
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H4 : {times N2 M2 R2}
+H5 : {nat N2}*
+H6 : {nat M1}
+H7 : {nat N2}
+H8 : {nat M2}
+H9 : {nat R2}
+============================
+ {leq z R2}
+
+Subgoal 2 is:
+ {leq R1 R2}
+
+times_mono < search.
+Subgoal 2:
+
+Variables: M1 M2 R1 R2 M N
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H3 : {times (s N) M1 R1}
+H4 : {times (s M) M2 R2}
+H5 : {leq N M}*
+============================
+ {leq R1 R2}
+
+times_mono < case H3.
+Subgoal 2:
+
+Variables: M1 M2 R1 R2 M N NM
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H4 : {times (s M) M2 R2}
+H5 : {leq N M}*
+H6 : {times N M1 NM}
+H7 : {plus NM M1 R1}
+============================
+ {leq R1 R2}
+
+times_mono < case H4.
+Subgoal 2:
+
+Variables: M1 M2 R1 R2 M N NM NM1
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H5 : {leq N M}*
+H6 : {times N M1 NM}
+H7 : {plus NM M1 R1}
+H8 : {times M M2 NM1}
+H9 : {plus NM1 M2 R2}
+============================
+ {leq R1 R2}
+
+times_mono < apply IH to H5 H2 H6 H8.
+Subgoal 2:
+
+Variables: M1 M2 R1 R2 M N NM NM1
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H5 : {leq N M}*
+H6 : {times N M1 NM}
+H7 : {plus NM M1 R1}
+H8 : {times M M2 NM1}
+H9 : {plus NM1 M2 R2}
+H10 : {leq NM NM1}
+============================
+ {leq R1 R2}
+
+times_mono < apply plus_mono to H10 H2 H7 H9.
+Subgoal 2:
+
+Variables: M1 M2 R1 R2 M N NM NM1
+IH : forall N1 N2 M1 M2 R1 R2, {leq N1 N2}* -> {leq M1 M2} ->
+       {times N1 M1 R1} -> {times N2 M2 R2} -> {leq R1 R2}
+H2 : {leq M1 M2}
+H5 : {leq N M}*
+H6 : {times N M1 NM}
+H7 : {plus NM M1 R1}
+H8 : {times M M2 NM1}
+H9 : {plus NM1 M2 R2}
+H10 : {leq NM NM1}
+H11 : {leq R1 R2}
+============================
+ {leq R1 R2}
+
+times_mono < search.
+Proof completed.
+Abella < Theorem times_inc1 : 
+forall N M R, {times N (s M) R} -> {leq N R}.
+
+
+============================
+ forall N M R, {times N (s M) R} -> {leq N R}
+
+times_inc1 < induction on 1.
+
+IH : forall N M R, {times N (s M) R}* -> {leq N R}
+============================
+ forall N M R, {times N (s M) R}@ -> {leq N R}
+
+times_inc1 < intros.
+
+Variables: N M R
+IH : forall N M R, {times N (s M) R}* -> {leq N R}
+H1 : {times N (s M) R}@
+============================
+ {leq N R}
+
+times_inc1 < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R, {times N (s M) R}* -> {leq N R}
+H2 : {nat (s M)}*
+============================
+ {leq z z}
+
+Subgoal 2 is:
+ {leq (s N1) R}
+
+times_inc1 < search.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N (s M) R}* -> {leq N R}
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) R}*
+============================
+ {leq (s N1) R}
+
+times_inc1 < apply IH to H2.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N (s M) R}* -> {leq N R}
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) R}*
+H4 : {leq N1 NM}
+============================
+ {leq (s N1) R}
+
+times_inc1 < apply plus22_inv to H3.
+Subgoal 2:
+
+Variables: M NM N1 R'
+IH : forall N M R, {times N (s M) R}* -> {leq N R}
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) (s R')}*
+H4 : {leq N1 NM}
+H5 : {plus NM M R'}
+============================
+ {leq (s N1) (s R')}
+
+times_inc1 < apply plus_inc1 to H5.
+Subgoal 2:
+
+Variables: M NM N1 R'
+IH : forall N M R, {times N (s M) R}* -> {leq N R}
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) (s R')}*
+H4 : {leq N1 NM}
+H5 : {plus NM M R'}
+H6 : {leq NM R'}
+============================
+ {leq (s N1) (s R')}
+
+times_inc1 < apply leq_trans to H4 H6.
+Subgoal 2:
+
+Variables: M NM N1 R'
+IH : forall N M R, {times N (s M) R}* -> {leq N R}
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) (s R')}*
+H4 : {leq N1 NM}
+H5 : {plus NM M R'}
+H6 : {leq NM R'}
+H7 : {leq N1 R'}
+============================
+ {leq (s N1) (s R')}
+
+times_inc1 < search.
+Proof completed.
+Abella < Theorem times_inc2 : 
+forall N M R, {times (s N) M R} -> {leq M R}.
+
+
+============================
+ forall N M R, {times (s N) M R} -> {leq M R}
+
+times_inc2 < intros.
+
+Variables: N M R
+H1 : {times (s N) M R}
+============================
+ {leq M R}
+
+times_inc2 < case H1.
+
+Variables: N M R NM
+H2 : {times N M NM}
+H3 : {plus NM M R}
+============================
+ {leq M R}
+
+times_inc2 < apply plus_inc2 to H3.
+
+Variables: N M R NM
+H2 : {times N M NM}
+H3 : {plus NM M R}
+H4 : {leq M R}
+============================
+ {leq M R}
+
+times_inc2 < search.
+Proof completed.
+Abella < Theorem plus_exists : 
+forall N M, {nat N} -> {nat M} -> (exists R, {plus N M R}).
+
+
+============================
+ forall N M, {nat N} -> {nat M} -> (exists R, {plus N M R})
+
+plus_exists < induction on 1.
+
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {plus N M R})
+============================
+ forall N M, {nat N}@ -> {nat M} -> (exists R, {plus N M R})
+
+plus_exists < intros.
+
+Variables: N M
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {plus N M R})
+H1 : {nat N}@
+H2 : {nat M}
+============================
+ exists R, {plus N M R}
+
+plus_exists < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {plus N M R})
+H2 : {nat M}
+============================
+ exists R, {plus z M R}
+
+Subgoal 2 is:
+ exists R, {plus (s N1) M R}
+
+plus_exists < search.
+Subgoal 2:
+
+Variables: M N1
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {plus N M R})
+H2 : {nat M}
+H3 : {nat N1}*
+============================
+ exists R, {plus (s N1) M R}
+
+plus_exists < apply IH to H3 H2.
+Subgoal 2:
+
+Variables: M N1 R
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {plus N M R})
+H2 : {nat M}
+H3 : {nat N1}*
+H4 : {plus N1 M R}
+============================
+ exists R, {plus (s N1) M R}
+
+plus_exists < search.
+Proof completed.
+Abella < Theorem times_exists : 
+forall N M, {nat N} -> {nat M} -> (exists R, {times N M R}).
+
+
+============================
+ forall N M, {nat N} -> {nat M} -> (exists R, {times N M R})
+
+times_exists < induction on 1.
+
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {times N M R})
+============================
+ forall N M, {nat N}@ -> {nat M} -> (exists R, {times N M R})
+
+times_exists < intros.
+
+Variables: N M
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {times N M R})
+H1 : {nat N}@
+H2 : {nat M}
+============================
+ exists R, {times N M R}
+
+times_exists < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {times N M R})
+H2 : {nat M}
+============================
+ exists R, {times z M R}
+
+Subgoal 2 is:
+ exists R, {times (s N1) M R}
+
+times_exists < search.
+Subgoal 2:
+
+Variables: M N1
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {times N M R})
+H2 : {nat M}
+H3 : {nat N1}*
+============================
+ exists R, {times (s N1) M R}
+
+times_exists < apply IH to H3 H2.
+Subgoal 2:
+
+Variables: M N1 R
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {times N M R})
+H2 : {nat M}
+H3 : {nat N1}*
+H4 : {times N1 M R}
+============================
+ exists R, {times (s N1) M R}
+
+times_exists < apply times_nat to H4.
+Subgoal 2:
+
+Variables: M N1 R
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {times N M R})
+H2 : {nat M}
+H3 : {nat N1}*
+H4 : {times N1 M R}
+H5 : {nat N1}
+H6 : {nat M}
+H7 : {nat R}
+============================
+ exists R, {times (s N1) M R}
+
+times_exists < apply plus_exists to H7 H6.
+Subgoal 2:
+
+Variables: M N1 R R1
+IH : forall N M, {nat N}* -> {nat M} -> (exists R, {times N M R})
+H2 : {nat M}
+H3 : {nat N1}*
+H4 : {times N1 M R}
+H5 : {nat N1}
+H6 : {nat M}
+H7 : {nat R}
+H8 : {plus R M R1}
+============================
+ exists R, {times (s N1) M R}
+
+times_exists < search.
+Proof completed.
+Abella < Theorem plus_uniq : 
+forall N M R1 R2, {plus N M R1} -> {plus N M R2} -> R1 = R2.
+
+
+============================
+ forall N M R1 R2, {plus N M R1} -> {plus N M R2} -> R1 = R2
+
+plus_uniq < induction on 1.
+
+IH : forall N M R1 R2, {plus N M R1}* -> {plus N M R2} -> R1 = R2
+============================
+ forall N M R1 R2, {plus N M R1}@ -> {plus N M R2} -> R1 = R2
+
+plus_uniq < intros.
+
+Variables: N M R1 R2
+IH : forall N M R1 R2, {plus N M R1}* -> {plus N M R2} -> R1 = R2
+H1 : {plus N M R1}@
+H2 : {plus N M R2}
+============================
+ R1 = R2
+
+plus_uniq < case H1.
+Subgoal 1:
+
+Variables: R1 R2
+IH : forall N M R1 R2, {plus N M R1}* -> {plus N M R2} -> R1 = R2
+H2 : {plus z R1 R2}
+H3 : {nat R1}*
+============================
+ R1 = R2
+
+Subgoal 2 is:
+ s R = R2
+
+plus_uniq < case H2.
+Subgoal 1:
+
+Variables: R2
+IH : forall N M R1 R2, {plus N M R1}* -> {plus N M R2} -> R1 = R2
+H3 : {nat R2}*
+H4 : {nat R2}
+============================
+ R2 = R2
+
+Subgoal 2 is:
+ s R = R2
+
+plus_uniq < search.
+Subgoal 2:
+
+Variables: M R2 R N1
+IH : forall N M R1 R2, {plus N M R1}* -> {plus N M R2} -> R1 = R2
+H2 : {plus (s N1) M R2}
+H3 : {plus N1 M R}*
+============================
+ s R = R2
+
+plus_uniq < case H2.
+Subgoal 2:
+
+Variables: M R N1 R3
+IH : forall N M R1 R2, {plus N M R1}* -> {plus N M R2} -> R1 = R2
+H3 : {plus N1 M R}*
+H4 : {plus N1 M R3}
+============================
+ s R = s R3
+
+plus_uniq < apply IH to H3 H4.
+Subgoal 2:
+
+Variables: M N1 R3
+IH : forall N M R1 R2, {plus N M R1}* -> {plus N M R2} -> R1 = R2
+H3 : {plus N1 M R3}*
+H4 : {plus N1 M R3}
+============================
+ s R3 = s R3
+
+plus_uniq < search.
+Proof completed.
+Abella < Theorem times_uniq : 
+forall N M R1 R2, {times N M R1} -> {times N M R2} -> R1 = R2.
+
+
+============================
+ forall N M R1 R2, {times N M R1} -> {times N M R2} -> R1 = R2
+
+times_uniq < induction on 1.
+
+IH : forall N M R1 R2, {times N M R1}* -> {times N M R2} -> R1 = R2
+============================
+ forall N M R1 R2, {times N M R1}@ -> {times N M R2} -> R1 = R2
+
+times_uniq < intros.
+
+Variables: N M R1 R2
+IH : forall N M R1 R2, {times N M R1}* -> {times N M R2} -> R1 = R2
+H1 : {times N M R1}@
+H2 : {times N M R2}
+============================
+ R1 = R2
+
+times_uniq < case H1.
+Subgoal 1:
+
+Variables: M R2
+IH : forall N M R1 R2, {times N M R1}* -> {times N M R2} -> R1 = R2
+H2 : {times z M R2}
+H3 : {nat M}*
+============================
+ z = R2
+
+Subgoal 2 is:
+ R1 = R2
+
+times_uniq < case H2.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R1 R2, {times N M R1}* -> {times N M R2} -> R1 = R2
+H3 : {nat M}*
+H4 : {nat M}
+============================
+ z = z
+
+Subgoal 2 is:
+ R1 = R2
+
+times_uniq < search.
+Subgoal 2:
+
+Variables: M R1 R2 NM N1
+IH : forall N M R1 R2, {times N M R1}* -> {times N M R2} -> R1 = R2
+H2 : {times (s N1) M R2}
+H3 : {times N1 M NM}*
+H4 : {plus NM M R1}*
+============================
+ R1 = R2
+
+times_uniq < case H2.
+Subgoal 2:
+
+Variables: M R1 R2 NM N1 NM1
+IH : forall N M R1 R2, {times N M R1}* -> {times N M R2} -> R1 = R2
+H3 : {times N1 M NM}*
+H4 : {plus NM M R1}*
+H5 : {times N1 M NM1}
+H6 : {plus NM1 M R2}
+============================
+ R1 = R2
+
+times_uniq < apply IH to H3 H5.
+Subgoal 2:
+
+Variables: M R1 R2 N1 NM1
+IH : forall N M R1 R2, {times N M R1}* -> {times N M R2} -> R1 = R2
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M R1}*
+H5 : {times N1 M NM1}
+H6 : {plus NM1 M R2}
+============================
+ R1 = R2
+
+times_uniq < apply plus_uniq to H4 H6.
+Subgoal 2:
+
+Variables: M R2 N1 NM1
+IH : forall N M R1 R2, {times N M R1}* -> {times N M R2} -> R1 = R2
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M R2}*
+H5 : {times N1 M NM1}
+H6 : {plus NM1 M R2}
+============================
+ R2 = R2
+
+times_uniq < search.
+Proof completed.
+Abella < Theorem plus_comm1 : 
+forall N M R1 R2, {plus N M R1} -> {plus M N R2} -> R1 = R2.
+
+
+============================
+ forall N M R1 R2, {plus N M R1} -> {plus M N R2} -> R1 = R2
+
+plus_comm1 < induction on 1.
+
+IH : forall N M R1 R2, {plus N M R1}* -> {plus M N R2} -> R1 = R2
+============================
+ forall N M R1 R2, {plus N M R1}@ -> {plus M N R2} -> R1 = R2
+
+plus_comm1 < intros.
+
+Variables: N M R1 R2
+IH : forall N M R1 R2, {plus N M R1}* -> {plus M N R2} -> R1 = R2
+H1 : {plus N M R1}@
+H2 : {plus M N R2}
+============================
+ R1 = R2
+
+plus_comm1 < case H1.
+Subgoal 1:
+
+Variables: R1 R2
+IH : forall N M R1 R2, {plus N M R1}* -> {plus M N R2} -> R1 = R2
+H2 : {plus R1 z R2}
+H3 : {nat R1}*
+============================
+ R1 = R2
+
+Subgoal 2 is:
+ s R = R2
+
+plus_comm1 < apply plus21_inv to H2.
+Subgoal 1:
+
+Variables: R2
+IH : forall N M R1 R2, {plus N M R1}* -> {plus M N R2} -> R1 = R2
+H2 : {plus R2 z R2}
+H3 : {nat R2}*
+============================
+ R2 = R2
+
+Subgoal 2 is:
+ s R = R2
+
+plus_comm1 < search.
+Subgoal 2:
+
+Variables: M R2 R N1
+IH : forall N M R1 R2, {plus N M R1}* -> {plus M N R2} -> R1 = R2
+H2 : {plus M (s N1) R2}
+H3 : {plus N1 M R}*
+============================
+ s R = R2
+
+plus_comm1 < apply plus22_inv to H2.
+Subgoal 2:
+
+Variables: M R N1 R'
+IH : forall N M R1 R2, {plus N M R1}* -> {plus M N R2} -> R1 = R2
+H2 : {plus M (s N1) (s R')}
+H3 : {plus N1 M R}*
+H4 : {plus M N1 R'}
+============================
+ s R = s R'
+
+plus_comm1 < apply IH to H3 H4.
+Subgoal 2:
+
+Variables: M N1 R'
+IH : forall N M R1 R2, {plus N M R1}* -> {plus M N R2} -> R1 = R2
+H2 : {plus M (s N1) (s R')}
+H3 : {plus N1 M R'}*
+H4 : {plus M N1 R'}
+============================
+ s R' = s R'
+
+plus_comm1 < search.
+Proof completed.
+Abella < Theorem plus_comm2 : 
+forall N M R, {plus N M R} -> {plus M N R}.
+
+
+============================
+ forall N M R, {plus N M R} -> {plus M N R}
+
+plus_comm2 < induction on 1.
+
+IH : forall N M R, {plus N M R}* -> {plus M N R}
+============================
+ forall N M R, {plus N M R}@ -> {plus M N R}
+
+plus_comm2 < intros.
+
+Variables: N M R
+IH : forall N M R, {plus N M R}* -> {plus M N R}
+H1 : {plus N M R}@
+============================
+ {plus M N R}
+
+plus_comm2 < case H1.
+Subgoal 1:
+
+Variables: R
+IH : forall N M R, {plus N M R}* -> {plus M N R}
+H2 : {nat R}*
+============================
+ {plus R z R}
+
+Subgoal 2 is:
+ {plus M (s N1) (s R1)}
+
+plus_comm2 < apply plus21 to H2.
+Subgoal 1:
+
+Variables: R
+IH : forall N M R, {plus N M R}* -> {plus M N R}
+H2 : {nat R}*
+H3 : {plus R z R}
+============================
+ {plus R z R}
+
+Subgoal 2 is:
+ {plus M (s N1) (s R1)}
+
+plus_comm2 < search.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {plus M N R}
+H2 : {plus N1 M R1}*
+============================
+ {plus M (s N1) (s R1)}
+
+plus_comm2 < apply IH to H2.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {plus M N R}
+H2 : {plus N1 M R1}*
+H3 : {plus M N1 R1}
+============================
+ {plus M (s N1) (s R1)}
+
+plus_comm2 < apply plus22 to H3.
+Subgoal 2:
+
+Variables: M R1 N1
+IH : forall N M R, {plus N M R}* -> {plus M N R}
+H2 : {plus N1 M R1}*
+H3 : {plus M N1 R1}
+H4 : {plus M (s N1) (s R1)}
+============================
+ {plus M (s N1) (s R1)}
+
+plus_comm2 < search.
+Proof completed.
+Abella < Theorem plus_assoc1 : 
+forall N M NM R MR NMR1 NMR2, {plus N M NM} -> {plus NM R NMR1} ->
+  {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+NMR2.
+
+
+============================
+ forall N M NM R MR NMR1 NMR2, {plus N M NM} -> {plus NM R NMR1} ->
+   {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+ NMR2
+
+plus_assoc1 < induction on 1.
+
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+============================
+ forall N M NM R MR NMR1 NMR2, {plus N M NM}@ -> {plus NM R NMR1} ->
+   {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+ NMR2
+
+plus_assoc1 < intros.
+
+Variables: N M NM R MR NMR1 NMR2
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+H1 : {plus N M NM}@
+H2 : {plus NM R NMR1}
+H3 : {plus M R MR}
+H4 : {plus N MR NMR2}
+============================
+ NMR1 = NMR2
+
+plus_assoc1 < case H1.
+Subgoal 1:
+
+Variables: NM R MR NMR1 NMR2
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {plus NM R NMR1}
+H3 : {plus NM R MR}
+H4 : {plus z MR NMR2}
+H5 : {nat NM}*
+============================
+ NMR1 = NMR2
+
+Subgoal 2 is:
+ NMR1 = NMR2
+
+plus_assoc1 < case H4.
+Subgoal 1:
+
+Variables: NM R NMR1 NMR2
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {plus NM R NMR1}
+H3 : {plus NM R NMR2}
+H5 : {nat NM}*
+H6 : {nat NMR2}
+============================
+ NMR1 = NMR2
+
+Subgoal 2 is:
+ NMR1 = NMR2
+
+plus_assoc1 < apply plus_uniq to H2 H3.
+Subgoal 1:
+
+Variables: NM R NMR2
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {plus NM R NMR2}
+H3 : {plus NM R NMR2}
+H5 : {nat NM}*
+H6 : {nat NMR2}
+============================
+ NMR2 = NMR2
+
+Subgoal 2 is:
+ NMR1 = NMR2
+
+plus_assoc1 < search.
+Subgoal 2:
+
+Variables: M R MR NMR1 NMR2 R1 N1
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {plus (s R1) R NMR1}
+H3 : {plus M R MR}
+H4 : {plus (s N1) MR NMR2}
+H5 : {plus N1 M R1}*
+============================
+ NMR1 = NMR2
+
+plus_assoc1 < case H2.
+Subgoal 2:
+
+Variables: M R MR NMR2 R1 N1 R2
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+H3 : {plus M R MR}
+H4 : {plus (s N1) MR NMR2}
+H5 : {plus N1 M R1}*
+H6 : {plus R1 R R2}
+============================
+ s R2 = NMR2
+
+plus_assoc1 < case H4.
+Subgoal 2:
+
+Variables: M R MR R1 N1 R2 R3
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+H3 : {plus M R MR}
+H5 : {plus N1 M R1}*
+H6 : {plus R1 R R2}
+H7 : {plus N1 MR R3}
+============================
+ s R2 = s R3
+
+plus_assoc1 < apply IH to H5 H6 H3 H7.
+Subgoal 2:
+
+Variables: M R MR R1 N1 R3
+IH : forall N M NM R MR NMR1 NMR2, {plus N M NM}* -> {plus NM R NMR1} ->
+       {plus M R MR} -> {plus N MR NMR2} -> NMR1 =
+     NMR2
+H3 : {plus M R MR}
+H5 : {plus N1 M R1}*
+H6 : {plus R1 R R3}
+H7 : {plus N1 MR R3}
+============================
+ s R3 = s R3
+
+plus_assoc1 < search.
+Proof completed.
+Abella < Theorem plus_assoc21 : 
+forall N M NM R NMR, {plus N M NM} -> {plus NM R NMR} ->
+  (exists MR, {plus M R MR} /\ {plus N MR NMR}).
+
+
+============================
+ forall N M NM R NMR, {plus N M NM} -> {plus NM R NMR} ->
+   (exists MR, {plus M R MR} /\ {plus N MR NMR})
+
+plus_assoc21 < induction on 1.
+
+IH : forall N M NM R NMR, {plus N M NM}* -> {plus NM R NMR} ->
+       (exists MR, {plus M R MR} /\ {plus N MR NMR})
+============================
+ forall N M NM R NMR, {plus N M NM}@ -> {plus NM R NMR} ->
+   (exists MR, {plus M R MR} /\ {plus N MR NMR})
+
+plus_assoc21 < intros.
+
+Variables: N M NM R NMR
+IH : forall N M NM R NMR, {plus N M NM}* -> {plus NM R NMR} ->
+       (exists MR, {plus M R MR} /\ {plus N MR NMR})
+H1 : {plus N M NM}@
+H2 : {plus NM R NMR}
+============================
+ exists MR, {plus M R MR} /\ {plus N MR NMR}
+
+plus_assoc21 < case H1.
+Subgoal 1:
+
+Variables: NM R NMR
+IH : forall N M NM R NMR, {plus N M NM}* -> {plus NM R NMR} ->
+       (exists MR, {plus M R MR} /\ {plus N MR NMR})
+H2 : {plus NM R NMR}
+H3 : {nat NM}*
+============================
+ exists MR, {plus NM R MR} /\ {plus z MR NMR}
+
+Subgoal 2 is:
+ exists MR, {plus M R MR} /\ {plus (s N1) MR NMR}
+
+plus_assoc21 < apply plus_nat to H2.
+Subgoal 1:
+
+Variables: NM R NMR
+IH : forall N M NM R NMR, {plus N M NM}* -> {plus NM R NMR} ->
+       (exists MR, {plus M R MR} /\ {plus N MR NMR})
+H2 : {plus NM R NMR}
+H3 : {nat NM}*
+H4 : {nat NM}
+H5 : {nat R}
+H6 : {nat NMR}
+============================
+ exists MR, {plus NM R MR} /\ {plus z MR NMR}
+
+Subgoal 2 is:
+ exists MR, {plus M R MR} /\ {plus (s N1) MR NMR}
+
+plus_assoc21 < search.
+Subgoal 2:
+
+Variables: M R NMR R1 N1
+IH : forall N M NM R NMR, {plus N M NM}* -> {plus NM R NMR} ->
+       (exists MR, {plus M R MR} /\ {plus N MR NMR})
+H2 : {plus (s R1) R NMR}
+H3 : {plus N1 M R1}*
+============================
+ exists MR, {plus M R MR} /\ {plus (s N1) MR NMR}
+
+plus_assoc21 < case H2.
+Subgoal 2:
+
+Variables: M R R1 N1 R2
+IH : forall N M NM R NMR, {plus N M NM}* -> {plus NM R NMR} ->
+       (exists MR, {plus M R MR} /\ {plus N MR NMR})
+H3 : {plus N1 M R1}*
+H4 : {plus R1 R R2}
+============================
+ exists MR, {plus M R MR} /\ {plus (s N1) MR (s R2)}
+
+plus_assoc21 < apply IH to H3 H4.
+Subgoal 2:
+
+Variables: M R R1 N1 R2 MR
+IH : forall N M NM R NMR, {plus N M NM}* -> {plus NM R NMR} ->
+       (exists MR, {plus M R MR} /\ {plus N MR NMR})
+H3 : {plus N1 M R1}*
+H4 : {plus R1 R R2}
+H5 : {plus M R MR}
+H6 : {plus N1 MR R2}
+============================
+ exists MR, {plus M R MR} /\ {plus (s N1) MR (s R2)}
+
+plus_assoc21 < search.
+Proof completed.
+Abella < Theorem plus_assoc22 : 
+forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR} ->
+  (exists NM, {plus N M NM} /\ {plus NM R NMR}).
+
+
+============================
+ forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR} ->
+   (exists NM, {plus N M NM} /\ {plus NM R NMR})
+
+plus_assoc22 < induction on 2.
+
+IH : forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}* ->
+       (exists NM, {plus N M NM} /\ {plus NM R NMR})
+============================
+ forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}@ ->
+   (exists NM, {plus N M NM} /\ {plus NM R NMR})
+
+plus_assoc22 < intros.
+
+Variables: M R MR N NMR
+IH : forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}* ->
+       (exists NM, {plus N M NM} /\ {plus NM R NMR})
+H1 : {plus M R MR}
+H2 : {plus N MR NMR}@
+============================
+ exists NM, {plus N M NM} /\ {plus NM R NMR}
+
+plus_assoc22 < case H2.
+Subgoal 1:
+
+Variables: M R NMR
+IH : forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}* ->
+       (exists NM, {plus N M NM} /\ {plus NM R NMR})
+H1 : {plus M R NMR}
+H3 : {nat NMR}*
+============================
+ exists NM, {plus z M NM} /\ {plus NM R NMR}
+
+Subgoal 2 is:
+ exists NM, {plus (s N1) M NM} /\ {plus NM R (s R1)}
+
+plus_assoc22 < apply plus_nat to H1.
+Subgoal 1:
+
+Variables: M R NMR
+IH : forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}* ->
+       (exists NM, {plus N M NM} /\ {plus NM R NMR})
+H1 : {plus M R NMR}
+H3 : {nat NMR}*
+H4 : {nat M}
+H5 : {nat R}
+H6 : {nat NMR}
+============================
+ exists NM, {plus z M NM} /\ {plus NM R NMR}
+
+Subgoal 2 is:
+ exists NM, {plus (s N1) M NM} /\ {plus NM R (s R1)}
+
+plus_assoc22 < apply plus21 to H4.
+Subgoal 1:
+
+Variables: M R NMR
+IH : forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}* ->
+       (exists NM, {plus N M NM} /\ {plus NM R NMR})
+H1 : {plus M R NMR}
+H3 : {nat NMR}*
+H4 : {nat M}
+H5 : {nat R}
+H6 : {nat NMR}
+H7 : {plus M z M}
+============================
+ exists NM, {plus z M NM} /\ {plus NM R NMR}
+
+Subgoal 2 is:
+ exists NM, {plus (s N1) M NM} /\ {plus NM R (s R1)}
+
+plus_assoc22 < search.
+Subgoal 2:
+
+Variables: M R MR R1 N1
+IH : forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}* ->
+       (exists NM, {plus N M NM} /\ {plus NM R NMR})
+H1 : {plus M R MR}
+H3 : {plus N1 MR R1}*
+============================
+ exists NM, {plus (s N1) M NM} /\ {plus NM R (s R1)}
+
+plus_assoc22 < apply IH to H1 H3.
+Subgoal 2:
+
+Variables: M R MR R1 N1 NM
+IH : forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}* ->
+       (exists NM, {plus N M NM} /\ {plus NM R NMR})
+H1 : {plus M R MR}
+H3 : {plus N1 MR R1}*
+H4 : {plus N1 M NM}
+H5 : {plus NM R R1}
+============================
+ exists NM, {plus (s N1) M NM} /\ {plus NM R (s R1)}
+
+plus_assoc22 < apply plus22 to H4.
+Subgoal 2:
+
+Variables: M R MR R1 N1 NM
+IH : forall M R MR N NMR, {plus M R MR} -> {plus N MR NMR}* ->
+       (exists NM, {plus N M NM} /\ {plus NM R NMR})
+H1 : {plus M R MR}
+H3 : {plus N1 MR R1}*
+H4 : {plus N1 M NM}
+H5 : {plus NM R R1}
+H6 : {plus N1 (s M) (s NM)}
+============================
+ exists NM, {plus (s N1) M NM} /\ {plus NM R (s R1)}
+
+plus_assoc22 < search.
+Proof completed.
+Abella < Theorem times21 : 
+forall N, {nat N} -> {times N z z}.
+
+
+============================
+ forall N, {nat N} -> {times N z z}
+
+times21 < induction on 1.
+
+IH : forall N, {nat N}* -> {times N z z}
+============================
+ forall N, {nat N}@ -> {times N z z}
+
+times21 < intros.
+
+Variables: N
+IH : forall N, {nat N}* -> {times N z z}
+H1 : {nat N}@
+============================
+ {times N z z}
+
+times21 < case H1.
+Subgoal 1:
+
+IH : forall N, {nat N}* -> {times N z z}
+============================
+ {times z z z}
+
+Subgoal 2 is:
+ {times (s N1) z z}
+
+times21 < search.
+Subgoal 2:
+
+Variables: N1
+IH : forall N, {nat N}* -> {times N z z}
+H2 : {nat N1}*
+============================
+ {times (s N1) z z}
+
+times21 < apply IH to H2.
+Subgoal 2:
+
+Variables: N1
+IH : forall N, {nat N}* -> {times N z z}
+H2 : {nat N1}*
+H3 : {times N1 z z}
+============================
+ {times (s N1) z z}
+
+times21 < search.
+Proof completed.
+Abella < Theorem times22 : 
+forall N M NM R, {times N M NM} -> {plus N NM R} -> {times N (s M) R}.
+
+
+============================
+ forall N M NM R, {times N M NM} -> {plus N NM R} -> {times N (s M) R}
+
+times22 < induction on 1.
+
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+============================
+ forall N M NM R, {times N M NM}@ -> {plus N NM R} -> {times N (s M) R}
+
+times22 < intros.
+
+Variables: N M NM R
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+H1 : {times N M NM}@
+H2 : {plus N NM R}
+============================
+ {times N (s M) R}
+
+times22 < case H1.
+Subgoal 1:
+
+Variables: M R
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+H2 : {plus z z R}
+H3 : {nat M}*
+============================
+ {times z (s M) R}
+
+Subgoal 2 is:
+ {times (s N1) (s M) R}
+
+times22 < case H2.
+Subgoal 1:
+
+Variables: M
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+H3 : {nat M}*
+H4 : {nat z}
+============================
+ {times z (s M) z}
+
+Subgoal 2 is:
+ {times (s N1) (s M) R}
+
+times22 < search.
+Subgoal 2:
+
+Variables: M NM R NM1 N1
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+H2 : {plus (s N1) NM R}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+============================
+ {times (s N1) (s M) R}
+
+times22 < case H2.
+Subgoal 2:
+
+Variables: M NM NM1 N1 R1
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+H5 : {plus N1 NM R1}
+============================
+ {times (s N1) (s M) (s R1)}
+
+times22 < apply plus_assoc22 to H4 H5.
+Subgoal 2:
+
+Variables: M NM NM1 N1 R1 NM2
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+H5 : {plus N1 NM R1}
+H6 : {plus N1 NM1 NM2}
+H7 : {plus NM2 M R1}
+============================
+ {times (s N1) (s M) (s R1)}
+
+times22 < apply IH to H3 H6.
+Subgoal 2:
+
+Variables: M NM NM1 N1 R1 NM2
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+H5 : {plus N1 NM R1}
+H6 : {plus N1 NM1 NM2}
+H7 : {plus NM2 M R1}
+H8 : {times N1 (s M) NM2}
+============================
+ {times (s N1) (s M) (s R1)}
+
+times22 < apply plus22 to H7.
+Subgoal 2:
+
+Variables: M NM NM1 N1 R1 NM2
+IH : forall N M NM R, {times N M NM}* -> {plus N NM R} -> {times N (s M) R}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+H5 : {plus N1 NM R1}
+H6 : {plus N1 NM1 NM2}
+H7 : {plus NM2 M R1}
+H8 : {times N1 (s M) NM2}
+H9 : {plus NM2 (s M) (s R1)}
+============================
+ {times (s N1) (s M) (s R1)}
+
+times22 < search.
+Proof completed.
+Abella < Theorem times21_inv : 
+forall N R, {times N z R} -> R = z.
+
+
+============================
+ forall N R, {times N z R} -> R = z
+
+times21_inv < induction on 1.
+
+IH : forall N R, {times N z R}* -> R = z
+============================
+ forall N R, {times N z R}@ -> R = z
+
+times21_inv < intros.
+
+Variables: N R
+IH : forall N R, {times N z R}* -> R = z
+H1 : {times N z R}@
+============================
+ R = z
+
+times21_inv < case H1.
+Subgoal 1:
+
+IH : forall N R, {times N z R}* -> R = z
+H2 : {nat z}*
+============================
+ z = z
+
+Subgoal 2 is:
+ R = z
+
+times21_inv < search.
+Subgoal 2:
+
+Variables: R NM N1
+IH : forall N R, {times N z R}* -> R = z
+H2 : {times N1 z NM}*
+H3 : {plus NM z R}*
+============================
+ R = z
+
+times21_inv < apply IH to H2.
+Subgoal 2:
+
+Variables: R N1
+IH : forall N R, {times N z R}* -> R = z
+H2 : {times N1 z z}*
+H3 : {plus z z R}*
+============================
+ R = z
+
+times21_inv < case H3.
+Subgoal 2:
+
+Variables: N1
+IH : forall N R, {times N z R}* -> R = z
+H2 : {times N1 z z}*
+H4 : {nat z}*
+============================
+ z = z
+
+times21_inv < search.
+Proof completed.
+Abella < Theorem times22_inv : 
+forall N M R, {times N (s M) R} ->
+  (exists NM, {times N M NM} /\ {plus N NM R}).
+
+
+============================
+ forall N M R, {times N (s M) R} ->
+   (exists NM, {times N M NM} /\ {plus N NM R})
+
+times22_inv < induction on 1.
+
+IH : forall N M R, {times N (s M) R}* ->
+       (exists NM, {times N M NM} /\ {plus N NM R})
+============================
+ forall N M R, {times N (s M) R}@ ->
+   (exists NM, {times N M NM} /\ {plus N NM R})
+
+times22_inv < intros.
+
+Variables: N M R
+IH : forall N M R, {times N (s M) R}* ->
+       (exists NM, {times N M NM} /\ {plus N NM R})
+H1 : {times N (s M) R}@
+============================
+ exists NM, {times N M NM} /\ {plus N NM R}
+
+times22_inv < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R, {times N (s M) R}* ->
+       (exists NM, {times N M NM} /\ {plus N NM R})
+H2 : {nat (s M)}*
+============================
+ exists NM, {times z M NM} /\ {plus z NM z}
+
+Subgoal 2 is:
+ exists NM, {times (s N1) M NM} /\ {plus (s N1) NM R}
+
+times22_inv < case H2.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R, {times N (s M) R}* ->
+       (exists NM, {times N M NM} /\ {plus N NM R})
+H3 : {nat M}*
+============================
+ exists NM, {times z M NM} /\ {plus z NM z}
+
+Subgoal 2 is:
+ exists NM, {times (s N1) M NM} /\ {plus (s N1) NM R}
+
+times22_inv < search.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N (s M) R}* ->
+       (exists NM, {times N M NM} /\ {plus N NM R})
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) R}*
+============================
+ exists NM, {times (s N1) M NM} /\ {plus (s N1) NM R}
+
+times22_inv < apply IH to H2.
+Subgoal 2:
+
+Variables: M R NM N1 NM1
+IH : forall N M R, {times N (s M) R}* ->
+       (exists NM, {times N M NM} /\ {plus N NM R})
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) R}*
+H4 : {times N1 M NM1}
+H5 : {plus N1 NM1 NM}
+============================
+ exists NM, {times (s N1) M NM} /\ {plus (s N1) NM R}
+
+times22_inv < apply plus22_inv to H3.
+Subgoal 2:
+
+Variables: M NM N1 NM1 R'
+IH : forall N M R, {times N (s M) R}* ->
+       (exists NM, {times N M NM} /\ {plus N NM R})
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) (s R')}*
+H4 : {times N1 M NM1}
+H5 : {plus N1 NM1 NM}
+H6 : {plus NM M R'}
+============================
+ exists NM, {times (s N1) M NM} /\ {plus (s N1) NM (s R')}
+
+times22_inv < apply plus_assoc21 to H5 H6.
+Subgoal 2:
+
+Variables: M NM N1 NM1 R' MR
+IH : forall N M R, {times N (s M) R}* ->
+       (exists NM, {times N M NM} /\ {plus N NM R})
+H2 : {times N1 (s M) NM}*
+H3 : {plus NM (s M) (s R')}*
+H4 : {times N1 M NM1}
+H5 : {plus N1 NM1 NM}
+H6 : {plus NM M R'}
+H7 : {plus NM1 M MR}
+H8 : {plus N1 MR R'}
+============================
+ exists NM, {times (s N1) M NM} /\ {plus (s N1) NM (s R')}
+
+times22_inv < search.
+Proof completed.
+Abella < Theorem times_comm1 : 
+forall N M R1 R2, {times N M R1} -> {times M N R2} -> R1 = R2.
+
+
+============================
+ forall N M R1 R2, {times N M R1} -> {times M N R2} -> R1 = R2
+
+times_comm1 < induction on 1.
+
+IH : forall N M R1 R2, {times N M R1}* -> {times M N R2} -> R1 = R2
+============================
+ forall N M R1 R2, {times N M R1}@ -> {times M N R2} -> R1 = R2
+
+times_comm1 < intros.
+
+Variables: N M R1 R2
+IH : forall N M R1 R2, {times N M R1}* -> {times M N R2} -> R1 = R2
+H1 : {times N M R1}@
+H2 : {times M N R2}
+============================
+ R1 = R2
+
+times_comm1 < case H1.
+Subgoal 1:
+
+Variables: M R2
+IH : forall N M R1 R2, {times N M R1}* -> {times M N R2} -> R1 = R2
+H2 : {times M z R2}
+H3 : {nat M}*
+============================
+ z = R2
+
+Subgoal 2 is:
+ R1 = R2
+
+times_comm1 < apply times21_inv to H2.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R1 R2, {times N M R1}* -> {times M N R2} -> R1 = R2
+H2 : {times M z z}
+H3 : {nat M}*
+============================
+ z = z
+
+Subgoal 2 is:
+ R1 = R2
+
+times_comm1 < search.
+Subgoal 2:
+
+Variables: M R1 R2 NM N1
+IH : forall N M R1 R2, {times N M R1}* -> {times M N R2} -> R1 = R2
+H2 : {times M (s N1) R2}
+H3 : {times N1 M NM}*
+H4 : {plus NM M R1}*
+============================
+ R1 = R2
+
+times_comm1 < apply times22_inv to H2.
+Subgoal 2:
+
+Variables: M R1 R2 NM N1 NM1
+IH : forall N M R1 R2, {times N M R1}* -> {times M N R2} -> R1 = R2
+H2 : {times M (s N1) R2}
+H3 : {times N1 M NM}*
+H4 : {plus NM M R1}*
+H5 : {times M N1 NM1}
+H6 : {plus M NM1 R2}
+============================
+ R1 = R2
+
+times_comm1 < apply IH to H3 H5.
+Subgoal 2:
+
+Variables: M R1 R2 N1 NM1
+IH : forall N M R1 R2, {times N M R1}* -> {times M N R2} -> R1 = R2
+H2 : {times M (s N1) R2}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M R1}*
+H5 : {times M N1 NM1}
+H6 : {plus M NM1 R2}
+============================
+ R1 = R2
+
+times_comm1 < apply plus_comm1 to H4 H6.
+Subgoal 2:
+
+Variables: M R2 N1 NM1
+IH : forall N M R1 R2, {times N M R1}* -> {times M N R2} -> R1 = R2
+H2 : {times M (s N1) R2}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M R2}*
+H5 : {times M N1 NM1}
+H6 : {plus M NM1 R2}
+============================
+ R2 = R2
+
+times_comm1 < search.
+Proof completed.
+Abella < Theorem times_comm2 : 
+forall N M R, {times N M R} -> {times M N R}.
+
+
+============================
+ forall N M R, {times N M R} -> {times M N R}
+
+times_comm2 < induction on 1.
+
+IH : forall N M R, {times N M R}* -> {times M N R}
+============================
+ forall N M R, {times N M R}@ -> {times M N R}
+
+times_comm2 < intros.
+
+Variables: N M R
+IH : forall N M R, {times N M R}* -> {times M N R}
+H1 : {times N M R}@
+============================
+ {times M N R}
+
+times_comm2 < case H1.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R, {times N M R}* -> {times M N R}
+H2 : {nat M}*
+============================
+ {times M z z}
+
+Subgoal 2 is:
+ {times M (s N1) R}
+
+times_comm2 < apply times21 to H2.
+Subgoal 1:
+
+Variables: M
+IH : forall N M R, {times N M R}* -> {times M N R}
+H2 : {nat M}*
+H3 : {times M z z}
+============================
+ {times M z z}
+
+Subgoal 2 is:
+ {times M (s N1) R}
+
+times_comm2 < search.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N M R}* -> {times M N R}
+H2 : {times N1 M NM}*
+H3 : {plus NM M R}*
+============================
+ {times M (s N1) R}
+
+times_comm2 < apply IH to H2.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N M R}* -> {times M N R}
+H2 : {times N1 M NM}*
+H3 : {plus NM M R}*
+H4 : {times M N1 NM}
+============================
+ {times M (s N1) R}
+
+times_comm2 < apply plus_comm2 to H3.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N M R}* -> {times M N R}
+H2 : {times N1 M NM}*
+H3 : {plus NM M R}*
+H4 : {times M N1 NM}
+H5 : {plus M NM R}
+============================
+ {times M (s N1) R}
+
+times_comm2 < apply times22 to H4 H5.
+Subgoal 2:
+
+Variables: M R NM N1
+IH : forall N M R, {times N M R}* -> {times M N R}
+H2 : {times N1 M NM}*
+H3 : {plus NM M R}*
+H4 : {times M N1 NM}
+H5 : {plus M NM R}
+H6 : {times M (s N1) R}
+============================
+ {times M (s N1) R}
+
+times_comm2 < search.
+Proof completed.
+Abella < Theorem distrib : 
+forall N M R S T, {plus N M R} -> {times R S T} ->
+  (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T}).
+
+
+============================
+ forall N M R S T, {plus N M R} -> {times R S T} ->
+   (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+
+distrib < induction on 1.
+
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+============================
+ forall N M R S T, {plus N M R}@ -> {times R S T} ->
+   (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+
+distrib < intros.
+
+Variables: N M R S T
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H1 : {plus N M R}@
+H2 : {times R S T}
+============================
+ exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < case H1.
+Subgoal 1:
+
+Variables: R S T
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H2 : {times R S T}
+H3 : {nat R}*
+============================
+ exists NS MS, {times z S NS} /\ {times R S MS} /\ {plus NS MS T}
+
+Subgoal 2 is:
+ exists NS MS, {times (s N1) S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < apply times_nat to H2.
+Subgoal 1:
+
+Variables: R S T
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H2 : {times R S T}
+H3 : {nat R}*
+H4 : {nat R}
+H5 : {nat S}
+H6 : {nat T}
+============================
+ exists NS MS, {times z S NS} /\ {times R S MS} /\ {plus NS MS T}
+
+Subgoal 2 is:
+ exists NS MS, {times (s N1) S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < search.
+Subgoal 2:
+
+Variables: M S T R1 N1
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H2 : {times (s R1) S T}
+H3 : {plus N1 M R1}*
+============================
+ exists NS MS, {times (s N1) S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < case H2.
+Subgoal 2:
+
+Variables: M S T R1 N1 NM
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H3 : {plus N1 M R1}*
+H4 : {times R1 S NM}
+H5 : {plus NM S T}
+============================
+ exists NS MS, {times (s N1) S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < apply IH to H3 H4.
+Subgoal 2:
+
+Variables: M S T R1 N1 NM NS MS
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H3 : {plus N1 M R1}*
+H4 : {times R1 S NM}
+H5 : {plus NM S T}
+H6 : {times N1 S NS}
+H7 : {times M S MS}
+H8 : {plus NS MS NM}
+============================
+ exists NS MS, {times (s N1) S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < apply plus_assoc21 to H8 H5.
+Subgoal 2:
+
+Variables: M S T R1 N1 NM NS MS MR
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H3 : {plus N1 M R1}*
+H4 : {times R1 S NM}
+H5 : {plus NM S T}
+H6 : {times N1 S NS}
+H7 : {times M S MS}
+H8 : {plus NS MS NM}
+H9 : {plus MS S MR}
+H10 : {plus NS MR T}
+============================
+ exists NS MS, {times (s N1) S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < apply plus_comm2 to H9.
+Subgoal 2:
+
+Variables: M S T R1 N1 NM NS MS MR
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H3 : {plus N1 M R1}*
+H4 : {times R1 S NM}
+H5 : {plus NM S T}
+H6 : {times N1 S NS}
+H7 : {times M S MS}
+H8 : {plus NS MS NM}
+H9 : {plus MS S MR}
+H10 : {plus NS MR T}
+H11 : {plus S MS MR}
+============================
+ exists NS MS, {times (s N1) S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < apply plus_assoc22 to H11 H10.
+Subgoal 2:
+
+Variables: M S T R1 N1 NM NS MS MR NM1
+IH : forall N M R S T, {plus N M R}* -> {times R S T} ->
+       (exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T})
+H3 : {plus N1 M R1}*
+H4 : {times R1 S NM}
+H5 : {plus NM S T}
+H6 : {times N1 S NS}
+H7 : {times M S MS}
+H8 : {plus NS MS NM}
+H9 : {plus MS S MR}
+H10 : {plus NS MR T}
+H11 : {plus S MS MR}
+H12 : {plus NS S NM1}
+H13 : {plus NM1 MS T}
+============================
+ exists NS MS, {times (s N1) S NS} /\ {times M S MS} /\ {plus NS MS T}
+
+distrib < search.
+Proof completed.
+Abella < Theorem factor : 
+forall N R NR M MR NMR, {times N R NR} -> {times M R MR} ->
+  {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR}).
+
+
+============================
+ forall N R NR M MR NMR, {times N R NR} -> {times M R MR} ->
+   {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+
+factor < induction on 1.
+
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+============================
+ forall N R NR M MR NMR, {times N R NR}@ -> {times M R MR} ->
+   {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+
+factor < intros.
+
+Variables: N R NR M MR NMR
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H1 : {times N R NR}@
+H2 : {times M R MR}
+H3 : {plus NR MR NMR}
+============================
+ exists NM, {plus N M NM} /\ {times NM R NMR}
+
+factor < case H1.
+Subgoal 1:
+
+Variables: R M MR NMR
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H2 : {times M R MR}
+H3 : {plus z MR NMR}
+H4 : {nat R}*
+============================
+ exists NM, {plus z M NM} /\ {times NM R NMR}
+
+Subgoal 2 is:
+ exists NM, {plus (s N1) M NM} /\ {times NM R NMR}
+
+factor < case H3.
+Subgoal 1:
+
+Variables: R M NMR
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H2 : {times M R NMR}
+H4 : {nat R}*
+H5 : {nat NMR}
+============================
+ exists NM, {plus z M NM} /\ {times NM R NMR}
+
+Subgoal 2 is:
+ exists NM, {plus (s N1) M NM} /\ {times NM R NMR}
+
+factor < apply times_nat to H2.
+Subgoal 1:
+
+Variables: R M NMR
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H2 : {times M R NMR}
+H4 : {nat R}*
+H5 : {nat NMR}
+H6 : {nat M}
+H7 : {nat R}
+H8 : {nat NMR}
+============================
+ exists NM, {plus z M NM} /\ {times NM R NMR}
+
+Subgoal 2 is:
+ exists NM, {plus (s N1) M NM} /\ {times NM R NMR}
+
+factor < search.
+Subgoal 2:
+
+Variables: R NR M MR NMR NM N1
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H2 : {times M R MR}
+H3 : {plus NR MR NMR}
+H4 : {times N1 R NM}*
+H5 : {plus NM R NR}*
+============================
+ exists NM, {plus (s N1) M NM} /\ {times NM R NMR}
+
+factor < apply plus_assoc21 to H5 H3.
+Subgoal 2:
+
+Variables: R NR M MR NMR NM N1 MR1
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H2 : {times M R MR}
+H3 : {plus NR MR NMR}
+H4 : {times N1 R NM}*
+H5 : {plus NM R NR}*
+H6 : {plus R MR MR1}
+H7 : {plus NM MR1 NMR}
+============================
+ exists NM, {plus (s N1) M NM} /\ {times NM R NMR}
+
+factor < apply plus_comm2 to H6.
+Subgoal 2:
+
+Variables: R NR M MR NMR NM N1 MR1
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H2 : {times M R MR}
+H3 : {plus NR MR NMR}
+H4 : {times N1 R NM}*
+H5 : {plus NM R NR}*
+H6 : {plus R MR MR1}
+H7 : {plus NM MR1 NMR}
+H8 : {plus MR R MR1}
+============================
+ exists NM, {plus (s N1) M NM} /\ {times NM R NMR}
+
+factor < apply plus_assoc22 to H8 H7.
+Subgoal 2:
+
+Variables: R NR M MR NMR NM N1 MR1 NM1
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H2 : {times M R MR}
+H3 : {plus NR MR NMR}
+H4 : {times N1 R NM}*
+H5 : {plus NM R NR}*
+H6 : {plus R MR MR1}
+H7 : {plus NM MR1 NMR}
+H8 : {plus MR R MR1}
+H9 : {plus NM MR NM1}
+H10 : {plus NM1 R NMR}
+============================
+ exists NM, {plus (s N1) M NM} /\ {times NM R NMR}
+
+factor < apply IH to H4 H2 H9.
+Subgoal 2:
+
+Variables: R NR M MR NMR NM N1 MR1 NM1 NM2
+IH : forall N R NR M MR NMR, {times N R NR}* -> {times M R MR} ->
+       {plus NR MR NMR} -> (exists NM, {plus N M NM} /\ {times NM R NMR})
+H2 : {times M R MR}
+H3 : {plus NR MR NMR}
+H4 : {times N1 R NM}*
+H5 : {plus NM R NR}*
+H6 : {plus R MR MR1}
+H7 : {plus NM MR1 NMR}
+H8 : {plus MR R MR1}
+H9 : {plus NM MR NM1}
+H10 : {plus NM1 R NMR}
+H11 : {plus N1 M NM2}
+H12 : {times NM2 R NM1}
+============================
+ exists NM, {plus (s N1) M NM} /\ {times NM R NMR}
+
+factor < search.
+Proof completed.
+Abella < Theorem times_assoc1 : 
+forall N M NM R MR NMR1 NMR2, {times N M NM} -> {times NM R NMR1} ->
+  {times M R MR} -> {times N MR NMR2} -> NMR1 =
+NMR2.
+
+
+============================
+ forall N M NM R MR NMR1 NMR2, {times N M NM} -> {times NM R NMR1} ->
+   {times M R MR} -> {times N MR NMR2} -> NMR1 =
+ NMR2
+
+times_assoc1 < induction on 1.
+
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+============================
+ forall N M NM R MR NMR1 NMR2, {times N M NM}@ -> {times NM R NMR1} ->
+   {times M R MR} -> {times N MR NMR2} -> NMR1 =
+ NMR2
+
+times_assoc1 < intros.
+
+Variables: N M NM R MR NMR1 NMR2
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H1 : {times N M NM}@
+H2 : {times NM R NMR1}
+H3 : {times M R MR}
+H4 : {times N MR NMR2}
+============================
+ NMR1 = NMR2
+
+times_assoc1 < case H1.
+Subgoal 1:
+
+Variables: M R MR NMR1 NMR2
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {times z R NMR1}
+H3 : {times M R MR}
+H4 : {times z MR NMR2}
+H5 : {nat M}*
+============================
+ NMR1 = NMR2
+
+Subgoal 2 is:
+ NMR1 = NMR2
+
+times_assoc1 < case H2.
+Subgoal 1:
+
+Variables: M R MR NMR2
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H3 : {times M R MR}
+H4 : {times z MR NMR2}
+H5 : {nat M}*
+H6 : {nat R}
+============================
+ z = NMR2
+
+Subgoal 2 is:
+ NMR1 = NMR2
+
+times_assoc1 < case H4.
+Subgoal 1:
+
+Variables: M R MR
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H3 : {times M R MR}
+H5 : {nat M}*
+H6 : {nat R}
+H7 : {nat MR}
+============================
+ z = z
+
+Subgoal 2 is:
+ NMR1 = NMR2
+
+times_assoc1 < search.
+Subgoal 2:
+
+Variables: M NM R MR NMR1 NMR2 NM1 N1
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {times NM R NMR1}
+H3 : {times M R MR}
+H4 : {times (s N1) MR NMR2}
+H5 : {times N1 M NM1}*
+H6 : {plus NM1 M NM}*
+============================
+ NMR1 = NMR2
+
+times_assoc1 < case H4.
+Subgoal 2:
+
+Variables: M NM R MR NMR1 NMR2 NM1 N1 NM2
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {times NM R NMR1}
+H3 : {times M R MR}
+H5 : {times N1 M NM1}*
+H6 : {plus NM1 M NM}*
+H7 : {times N1 MR NM2}
+H8 : {plus NM2 MR NMR2}
+============================
+ NMR1 = NMR2
+
+times_assoc1 < apply distrib to H6 H2.
+Subgoal 2:
+
+Variables: M NM R MR NMR1 NMR2 NM1 N1 NM2 NS MS
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {times NM R NMR1}
+H3 : {times M R MR}
+H5 : {times N1 M NM1}*
+H6 : {plus NM1 M NM}*
+H7 : {times N1 MR NM2}
+H8 : {plus NM2 MR NMR2}
+H9 : {times NM1 R NS}
+H10 : {times M R MS}
+H11 : {plus NS MS NMR1}
+============================
+ NMR1 = NMR2
+
+times_assoc1 < apply IH to H5 H9 H3 H7.
+Subgoal 2:
+
+Variables: M NM R MR NMR1 NMR2 NM1 N1 NM2 MS
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {times NM R NMR1}
+H3 : {times M R MR}
+H5 : {times N1 M NM1}*
+H6 : {plus NM1 M NM}*
+H7 : {times N1 MR NM2}
+H8 : {plus NM2 MR NMR2}
+H9 : {times NM1 R NM2}
+H10 : {times M R MS}
+H11 : {plus NM2 MS NMR1}
+============================
+ NMR1 = NMR2
+
+times_assoc1 < apply times_uniq to H3 H10.
+Subgoal 2:
+
+Variables: M NM R NMR1 NMR2 NM1 N1 NM2 MS
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {times NM R NMR1}
+H3 : {times M R MS}
+H5 : {times N1 M NM1}*
+H6 : {plus NM1 M NM}*
+H7 : {times N1 MS NM2}
+H8 : {plus NM2 MS NMR2}
+H9 : {times NM1 R NM2}
+H10 : {times M R MS}
+H11 : {plus NM2 MS NMR1}
+============================
+ NMR1 = NMR2
+
+times_assoc1 < apply plus_uniq to H8 H11.
+Subgoal 2:
+
+Variables: M NM R NMR1 NM1 N1 NM2 MS
+IH : forall N M NM R MR NMR1 NMR2, {times N M NM}* -> {times NM R NMR1} ->
+       {times M R MR} -> {times N MR NMR2} -> NMR1 =
+     NMR2
+H2 : {times NM R NMR1}
+H3 : {times M R MS}
+H5 : {times N1 M NM1}*
+H6 : {plus NM1 M NM}*
+H7 : {times N1 MS NM2}
+H8 : {plus NM2 MS NMR1}
+H9 : {times NM1 R NM2}
+H10 : {times M R MS}
+H11 : {plus NM2 MS NMR1}
+============================
+ NMR1 = NMR1
+
+times_assoc1 < search.
+Proof completed.
+Abella < Theorem times_assoc21 : 
+forall N M NM R NMR, {times N M NM} -> {times NM R NMR} ->
+  (exists MR, {times M R MR} /\ {times N MR NMR}).
+
+
+============================
+ forall N M NM R NMR, {times N M NM} -> {times NM R NMR} ->
+   (exists MR, {times M R MR} /\ {times N MR NMR})
+
+times_assoc21 < induction on 1.
+
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+============================
+ forall N M NM R NMR, {times N M NM}@ -> {times NM R NMR} ->
+   (exists MR, {times M R MR} /\ {times N MR NMR})
+
+times_assoc21 < intros.
+
+Variables: N M NM R NMR
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H1 : {times N M NM}@
+H2 : {times NM R NMR}
+============================
+ exists MR, {times M R MR} /\ {times N MR NMR}
+
+times_assoc21 < case H1.
+Subgoal 1:
+
+Variables: M R NMR
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H2 : {times z R NMR}
+H3 : {nat M}*
+============================
+ exists MR, {times M R MR} /\ {times z MR NMR}
+
+Subgoal 2 is:
+ exists MR, {times M R MR} /\ {times (s N1) MR NMR}
+
+times_assoc21 < case H2.
+Subgoal 1:
+
+Variables: M R
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H3 : {nat M}*
+H4 : {nat R}
+============================
+ exists MR, {times M R MR} /\ {times z MR z}
+
+Subgoal 2 is:
+ exists MR, {times M R MR} /\ {times (s N1) MR NMR}
+
+times_assoc21 < apply times_exists to H3 H4.
+Subgoal 1:
+
+Variables: M R R1
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H3 : {nat M}*
+H4 : {nat R}
+H5 : {times M R R1}
+============================
+ exists MR, {times M R MR} /\ {times z MR z}
+
+Subgoal 2 is:
+ exists MR, {times M R MR} /\ {times (s N1) MR NMR}
+
+times_assoc21 < apply times_nat to H5.
+Subgoal 1:
+
+Variables: M R R1
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H3 : {nat M}*
+H4 : {nat R}
+H5 : {times M R R1}
+H6 : {nat M}
+H7 : {nat R}
+H8 : {nat R1}
+============================
+ exists MR, {times M R MR} /\ {times z MR z}
+
+Subgoal 2 is:
+ exists MR, {times M R MR} /\ {times (s N1) MR NMR}
+
+times_assoc21 < search.
+Subgoal 2:
+
+Variables: M NM R NMR NM1 N1
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H2 : {times NM R NMR}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+============================
+ exists MR, {times M R MR} /\ {times (s N1) MR NMR}
+
+times_assoc21 < apply distrib to H4 H2.
+Subgoal 2:
+
+Variables: M NM R NMR NM1 N1 NS MS
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H2 : {times NM R NMR}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+H5 : {times NM1 R NS}
+H6 : {times M R MS}
+H7 : {plus NS MS NMR}
+============================
+ exists MR, {times M R MR} /\ {times (s N1) MR NMR}
+
+times_assoc21 < apply IH to H3 H5.
+Subgoal 2:
+
+Variables: M NM R NMR NM1 N1 NS MS MR
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H2 : {times NM R NMR}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+H5 : {times NM1 R NS}
+H6 : {times M R MS}
+H7 : {plus NS MS NMR}
+H8 : {times M R MR}
+H9 : {times N1 MR NS}
+============================
+ exists MR, {times M R MR} /\ {times (s N1) MR NMR}
+
+times_assoc21 < apply times_uniq to H6 H8.
+Subgoal 2:
+
+Variables: M NM R NMR NM1 N1 NS MR
+IH : forall N M NM R NMR, {times N M NM}* -> {times NM R NMR} ->
+       (exists MR, {times M R MR} /\ {times N MR NMR})
+H2 : {times NM R NMR}
+H3 : {times N1 M NM1}*
+H4 : {plus NM1 M NM}*
+H5 : {times NM1 R NS}
+H6 : {times M R MR}
+H7 : {plus NS MR NMR}
+H8 : {times M R MR}
+H9 : {times N1 MR NS}
+============================
+ exists MR, {times M R MR} /\ {times (s N1) MR NMR}
+
+times_assoc21 < search.
+Proof completed.
+Abella < Theorem times_assoc22 : 
+forall M R MR N NMR, {times M R MR} -> {times N MR NMR} ->
+  (exists NM, {times N M NM} /\ {times NM R NMR}).
+
+
+============================
+ forall M R MR N NMR, {times M R MR} -> {times N MR NMR} ->
+   (exists NM, {times N M NM} /\ {times NM R NMR})
+
+times_assoc22 < induction on 2.
+
+IH : forall M R MR N NMR, {times M R MR} -> {times N MR NMR}* ->
+       (exists NM, {times N M NM} /\ {times NM R NMR})
+============================
+ forall M R MR N NMR, {times M R MR} -> {times N MR NMR}@ ->
+   (exists NM, {times N M NM} /\ {times NM R NMR})
+
+times_assoc22 < intros.
+
+Variables: M R MR N NMR
+IH : forall M R MR N NMR, {times M R MR} -> {times N MR NMR}* ->
+       (exists NM, {times N M NM} /\ {times NM R NMR})
+H1 : {times M R MR}
+H2 : {times N MR NMR}@
+============================
+ exists NM, {times N M NM} /\ {times NM R NMR}
+
+times_assoc22 < case H2.
+Subgoal 1:
+
+Variables: M R MR
+IH : forall M R MR N NMR, {times M R MR} -> {times N MR NMR}* ->
+       (exists NM, {times N M NM} /\ {times NM R NMR})
+H1 : {times M R MR}
+H3 : {nat MR}*
+============================
+ exists NM, {times z M NM} /\ {times NM R z}
+
+Subgoal 2 is:
+ exists NM, {times (s N1) M NM} /\ {times NM R NMR}
+
+times_assoc22 < apply times_nat to H1.
+Subgoal 1:
+
+Variables: M R MR
+IH : forall M R MR N NMR, {times M R MR} -> {times N MR NMR}* ->
+       (exists NM, {times N M NM} /\ {times NM R NMR})
+H1 : {times M R MR}
+H3 : {nat MR}*
+H4 : {nat M}
+H5 : {nat R}
+H6 : {nat MR}
+============================
+ exists NM, {times z M NM} /\ {times NM R z}
+
+Subgoal 2 is:
+ exists NM, {times (s N1) M NM} /\ {times NM R NMR}
+
+times_assoc22 < search.
+Subgoal 2:
+
+Variables: M R MR NMR NM N1
+IH : forall M R MR N NMR, {times M R MR} -> {times N MR NMR}* ->
+       (exists NM, {times N M NM} /\ {times NM R NMR})
+H1 : {times M R MR}
+H3 : {times N1 MR NM}*
+H4 : {plus NM MR NMR}*
+============================
+ exists NM, {times (s N1) M NM} /\ {times NM R NMR}
+
+times_assoc22 < apply IH to H1 H3.
+Subgoal 2:
+
+Variables: M R MR NMR NM N1 NM1
+IH : forall M R MR N NMR, {times M R MR} -> {times N MR NMR}* ->
+       (exists NM, {times N M NM} /\ {times NM R NMR})
+H1 : {times M R MR}
+H3 : {times N1 MR NM}*
+H4 : {plus NM MR NMR}*
+H5 : {times N1 M NM1}
+H6 : {times NM1 R NM}
+============================
+ exists NM, {times (s N1) M NM} /\ {times NM R NMR}
+
+times_assoc22 < apply factor to H6 H1 H4.
+Subgoal 2:
+
+Variables: M R MR NMR NM N1 NM1 NM2
+IH : forall M R MR N NMR, {times M R MR} -> {times N MR NMR}* ->
+       (exists NM, {times N M NM} /\ {times NM R NMR})
+H1 : {times M R MR}
+H3 : {times N1 MR NM}*
+H4 : {plus NM MR NMR}*
+H5 : {times N1 M NM1}
+H6 : {times NM1 R NM}
+H7 : {plus NM1 M NM2}
+H8 : {times NM2 R NMR}
+============================
+ exists NM, {times (s N1) M NM} /\ {times NM R NMR}
+
+times_assoc22 < search.
+Proof completed.
+Abella < 

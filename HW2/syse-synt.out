@@ -1,0 +1,1268 @@
+Welcome to Abella 2.0.6.
+Abella < Specification "syse-synt".
+Reading specification "c:\\Users\\ratho\\OneDrive\\Desktop\\217\\HW2_systemE\\syse-synt".
+
+Abella < Import "nat-string".
+Importing from "c:\\Users\\ratho\\OneDrive\\Desktop\\217\\HW2_systemE\\nat-string".
+
+Abella < Define eq_ctx : (list o) -> prop by 
+eq_ctx nil;
+eq_ctx (eq X Y :: G) := eq_ctx G.
+
+Abella < Theorem eq_ctx_inv : 
+forall G E, eq_ctx G -> member E G -> (exists X Y, E = eq X Y).
+
+
+============================
+ forall G E, eq_ctx G -> member E G -> (exists X Y, E = eq X Y)
+
+eq_ctx_inv < induction on 1.
+
+IH : forall G E, eq_ctx G * -> member E G -> (exists X Y, E = eq X Y)
+============================
+ forall G E, eq_ctx G @ -> member E G -> (exists X Y, E = eq X Y)
+
+eq_ctx_inv < intros.
+
+Variables: G E
+IH : forall G E, eq_ctx G * -> member E G -> (exists X Y, E = eq X Y)
+H1 : eq_ctx G @
+H2 : member E G
+============================
+ exists X Y, E = eq X Y
+
+eq_ctx_inv < case H1.
+Subgoal 1:
+
+Variables: E
+IH : forall G E, eq_ctx G * -> member E G -> (exists X Y, E = eq X Y)
+H2 : member E nil
+============================
+ exists X Y, E = eq X Y
+
+Subgoal 2 is:
+ exists X Y, E = eq X Y
+
+eq_ctx_inv < case H2.
+Subgoal 2:
+
+Variables: E G1 Y X
+IH : forall G E, eq_ctx G * -> member E G -> (exists X Y, E = eq X Y)
+H2 : member E (eq X Y :: G1)
+H3 : eq_ctx G1 *
+============================
+ exists X Y, E = eq X Y
+
+eq_ctx_inv < case H2.
+Subgoal 2.1:
+
+Variables: G1 Y X
+IH : forall G E, eq_ctx G * -> member E G -> (exists X Y, E = eq X Y)
+H3 : eq_ctx G1 *
+============================
+ exists X1 Y1, eq X Y = eq X1 Y1
+
+Subgoal 2.2 is:
+ exists X Y, E = eq X Y
+
+eq_ctx_inv < search.
+Subgoal 2.2:
+
+Variables: E G1 Y X
+IH : forall G E, eq_ctx G * -> member E G -> (exists X Y, E = eq X Y)
+H3 : eq_ctx G1 *
+H4 : member E G1
+============================
+ exists X Y, E = eq X Y
+
+eq_ctx_inv < apply IH to H3 H4.
+Subgoal 2.2:
+
+Variables: G1 Y X X1 Y1
+IH : forall G E, eq_ctx G * -> member E G -> (exists X Y, E = eq X Y)
+H3 : eq_ctx G1 *
+H4 : member (eq X1 Y1) G1
+============================
+ exists X Y, eq X1 Y1 = eq X Y
+
+eq_ctx_inv < search.
+Proof completed.
+Abella < Define eq1 : (list o) -> exp -> exp -> prop by 
+eq1 G (num N) (num N) := eq_ctx G;
+eq1 G (str S) (str S) := eq_ctx G;
+eq1 G (plus E1 E2) (plus E1' E2') := eq1 G E1 E1' /\ eq1 G E2 E2';
+eq1 G (times E1 E2) (times E1' E2') := eq1 G E1 E1' /\ eq1 G E2 E2';
+eq1 G (cat E1 E2) (cat E1' E2') := eq1 G E1 E1' /\ eq1 G E2 E2';
+eq1 G (len E) (len E') := eq1 G E E';
+eq1 G (letv E1 E2) (letv E1' E2') := eq1 G E1 E1' /\ (nabla x, eq1 (eq x x :: G) (E2 x) (E2' x));
+nabla x, eq1 (G x) x x := nabla x, eq_ctx (G x) /\ member (eq x x) (G x).
+
+Abella < Theorem eq1_ctx : 
+forall G E1 E2, eq1 G E1 E2 -> eq_ctx G.
+
+
+============================
+ forall G E1 E2, eq1 G E1 E2 -> eq_ctx G
+
+eq1_ctx < induction on 1.
+
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+============================
+ forall G E1 E2, eq1 G E1 E2 @ -> eq_ctx G
+
+eq1_ctx < intros.
+
+Variables: G E1 E2
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H1 : eq1 G E1 E2 @
+============================
+ eq_ctx G
+
+eq1_ctx < case H1.
+Subgoal 1:
+
+Variables: G N
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq_ctx G
+============================
+ eq_ctx G
+
+Subgoal 2 is:
+ eq_ctx G
+
+Subgoal 3 is:
+ eq_ctx G
+
+Subgoal 4 is:
+ eq_ctx G
+
+Subgoal 5 is:
+ eq_ctx G
+
+Subgoal 6 is:
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < search.
+Subgoal 2:
+
+Variables: G S
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq_ctx G
+============================
+ eq_ctx G
+
+Subgoal 3 is:
+ eq_ctx G
+
+Subgoal 4 is:
+ eq_ctx G
+
+Subgoal 5 is:
+ eq_ctx G
+
+Subgoal 6 is:
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < search.
+Subgoal 3:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+============================
+ eq_ctx G
+
+Subgoal 4 is:
+ eq_ctx G
+
+Subgoal 5 is:
+ eq_ctx G
+
+Subgoal 6 is:
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < apply IH to H2.
+Subgoal 3:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : eq_ctx G
+============================
+ eq_ctx G
+
+Subgoal 4 is:
+ eq_ctx G
+
+Subgoal 5 is:
+ eq_ctx G
+
+Subgoal 6 is:
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < search.
+Subgoal 4:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+============================
+ eq_ctx G
+
+Subgoal 5 is:
+ eq_ctx G
+
+Subgoal 6 is:
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < apply IH to H2.
+Subgoal 4:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : eq_ctx G
+============================
+ eq_ctx G
+
+Subgoal 5 is:
+ eq_ctx G
+
+Subgoal 6 is:
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < search.
+Subgoal 5:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+============================
+ eq_ctx G
+
+Subgoal 6 is:
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < apply IH to H2.
+Subgoal 5:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : eq_ctx G
+============================
+ eq_ctx G
+
+Subgoal 6 is:
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < search.
+Subgoal 6:
+
+Variables: G E' E
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E E' *
+============================
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < apply IH to H2.
+Subgoal 6:
+
+Variables: G E' E
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E E' *
+H3 : eq_ctx G
+============================
+ eq_ctx G
+
+Subgoal 7 is:
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < search.
+Subgoal 7:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E3 E1' *
+H3 : eq1 (eq n1 n1 :: G) (E4 n1) (E2' n1) *
+============================
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < apply IH to H2.
+Subgoal 7:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq1 G E3 E1' *
+H3 : eq1 (eq n1 n1 :: G) (E4 n1) (E2' n1) *
+H4 : eq_ctx G
+============================
+ eq_ctx G
+
+Subgoal 8 is:
+ eq_ctx (G n1)
+
+eq1_ctx < search.
+Subgoal 8:
+
+Variables: G
+IH : forall G E1 E2, eq1 G E1 E2 * -> eq_ctx G
+H2 : eq_ctx (G n1)
+H3 : member (eq n1 n1) (G n1)
+============================
+ eq_ctx (G n1)
+
+eq1_ctx < search.
+Proof completed.
+Abella < Theorem eq12_aux : 
+forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)} ->
+  (nabla x y, {G, eq x y |- eq (E1 x) (E2 y)}).
+
+
+============================
+ forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)} ->
+   (nabla x y, {G, eq x y |- eq (E1 x) (E2 y)})
+
+eq12_aux < induction on 2.
+
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x y, {G, eq x y |- eq (E1 x) (E2 y)})
+============================
+ forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}@ ->
+   (nabla x y, {G, eq x y |- eq (E1 x) (E2 y)})
+
+eq12_aux < intros.
+
+Variables: G E1 E2
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x y, {G, eq x y |- eq (E1 x) (E2 y)})
+H1 : eq_ctx G
+H2 : {G, eq n1 n1 |- eq (E1 n1) (E2 n1)}@
+============================
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < case H2.
+Subgoal 1:
+
+Variables: G N
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+============================
+ {G, eq n1 n2 |- eq (num N) (num N)}
+
+Subgoal 2 is:
+ {G, eq n1 n2 |- eq (str S) (str S)}
+
+Subgoal 3 is:
+ {G, eq n1 n2 |- eq (plus (E4 n1) (E3 n1)) (plus (E1' n2) (E2' n2))}
+
+Subgoal 4 is:
+ {G, eq n1 n2 |- eq (times (E4 n1) (E3 n1)) (times (E1' n2) (E2' n2))}
+
+Subgoal 5 is:
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < search.
+Subgoal 2:
+
+Variables: G S
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+============================
+ {G, eq n1 n2 |- eq (str S) (str S)}
+
+Subgoal 3 is:
+ {G, eq n1 n2 |- eq (plus (E4 n1) (E3 n1)) (plus (E1' n2) (E2' n2))}
+
+Subgoal 4 is:
+ {G, eq n1 n2 |- eq (times (E4 n1) (E3 n1)) (times (E1' n2) (E2' n2))}
+
+Subgoal 5 is:
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < search.
+Subgoal 3:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+============================
+ {G, eq n1 n2 |- eq (plus (E4 n1) (E3 n1)) (plus (E1' n2) (E2' n2))}
+
+Subgoal 4 is:
+ {G, eq n1 n2 |- eq (times (E4 n1) (E3 n1)) (times (E1' n2) (E2' n2))}
+
+Subgoal 5 is:
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to H1 H3.
+Subgoal 3:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+H5 : {G, eq n1 n2 |- eq (E4 n1) (E1' n2)}
+============================
+ {G, eq n1 n2 |- eq (plus (E4 n1) (E3 n1)) (plus (E1' n2) (E2' n2))}
+
+Subgoal 4 is:
+ {G, eq n1 n2 |- eq (times (E4 n1) (E3 n1)) (times (E1' n2) (E2' n2))}
+
+Subgoal 5 is:
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to H1 H4.
+Subgoal 3:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+H5 : {G, eq n1 n2 |- eq (E4 n1) (E1' n2)}
+H6 : {G, eq n1 n2 |- eq (E3 n1) (E2' n2)}
+============================
+ {G, eq n1 n2 |- eq (plus (E4 n1) (E3 n1)) (plus (E1' n2) (E2' n2))}
+
+Subgoal 4 is:
+ {G, eq n1 n2 |- eq (times (E4 n1) (E3 n1)) (times (E1' n2) (E2' n2))}
+
+Subgoal 5 is:
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < search.
+Subgoal 4:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+============================
+ {G, eq n1 n2 |- eq (times (E4 n1) (E3 n1)) (times (E1' n2) (E2' n2))}
+
+Subgoal 5 is:
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to H1 H3.
+Subgoal 4:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+H5 : {G, eq n1 n2 |- eq (E4 n1) (E1' n2)}
+============================
+ {G, eq n1 n2 |- eq (times (E4 n1) (E3 n1)) (times (E1' n2) (E2' n2))}
+
+Subgoal 5 is:
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to H1 H4.
+Subgoal 4:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+H5 : {G, eq n1 n2 |- eq (E4 n1) (E1' n2)}
+H6 : {G, eq n1 n2 |- eq (E3 n1) (E2' n2)}
+============================
+ {G, eq n1 n2 |- eq (times (E4 n1) (E3 n1)) (times (E1' n2) (E2' n2))}
+
+Subgoal 5 is:
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < search.
+Subgoal 5:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+============================
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to H1 H3.
+Subgoal 5:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+H5 : {G, eq n1 n2 |- eq (E4 n1) (E1' n2)}
+============================
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to H1 H4.
+Subgoal 5:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1 |- eq (E3 n1) (E2' n1)}*
+H5 : {G, eq n1 n2 |- eq (E4 n1) (E1' n2)}
+H6 : {G, eq n1 n2 |- eq (E3 n1) (E2' n2)}
+============================
+ {G, eq n1 n2 |- eq (cat (E4 n1) (E3 n1)) (cat (E1' n2) (E2' n2))}
+
+Subgoal 6 is:
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < search.
+Subgoal 6:
+
+Variables: G E' E
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E n1) (E' n1)}*
+============================
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to H1 H3.
+Subgoal 6:
+
+Variables: G E' E
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E n1) (E' n1)}*
+H4 : {G, eq n1 n2 |- eq (E n1) (E' n2)}
+============================
+ {G, eq n1 n2 |- eq (len (E n1)) (len (E' n2))}
+
+Subgoal 7 is:
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < search.
+Subgoal 7:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1, eq n2 n3 |- eq (E3 n1 n2) (E2' n1 n3)}*
+============================
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to H1 H3.
+Subgoal 7:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1, eq n2 n3 |- eq (E3 n1 n2) (E2' n1 n3)}*
+H5 : {G, eq n1 n2 |- eq (E4 n1) (E1' n2)}
+============================
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply IH to _ H4.
+Subgoal 7:
+
+Variables: G E2' E3 E1' E4
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1 |- eq (E4 n1) (E1' n1)}*
+H4 : {G, eq n1 n1, eq n2 n3 |- eq (E3 n1 n2) (E2' n1 n3)}*
+H5 : {G, eq n1 n2 |- eq (E4 n1) (E1' n2)}
+H6 : {G, eq n2 n3, eq n1 n4 |- eq (E3 n1 n2) (E2' n4 n3)}
+============================
+ {G, eq n1 n2 |- eq (letv (E4 n1) (E3 n1)) (letv (E1' n2) (E2' n2))}
+
+Subgoal 8 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < search.
+Subgoal 8:
+
+Variables: G E1 E2 F
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1, [F n1] |- eq (E1 n1) (E2 n1)}*
+H4 : member (F n1) (eq n1 n1 :: G)
+============================
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < case H4.
+Subgoal 8.1:
+
+Variables: G E1 E2
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1, [eq n1 n1] |- eq (E1 n1) (E2 n1)}*
+============================
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+Subgoal 8.2 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < case H3.
+Subgoal 8.1:
+
+Variables: G
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+============================
+ {G, eq n1 n2 |- eq n1 n2}
+
+Subgoal 8.2 is:
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < search.
+Subgoal 8.2:
+
+Variables: G E1 E2 F
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1, [F n1] |- eq (E1 n1) (E2 n1)}*
+H5 : member (F n1) G
+============================
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply member_prune to H5.
+Subgoal 8.2:
+
+Variables: G E1 E2 M'
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1, [M'] |- eq (E1 n1) (E2 n1)}*
+H5 : member M' G
+============================
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < apply eq_ctx_inv to H1 H5.
+Subgoal 8.2:
+
+Variables: G E1 E2 X Y
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H3 : {G, eq n1 n1, [eq X Y] |- eq (E1 n1) (E2 n1)}*
+H5 : member (eq X Y) G
+============================
+ {G, eq n1 n2 |- eq (E1 n1) (E2 n2)}
+
+eq12_aux < case H3.
+Subgoal 8.2:
+
+Variables: G X Y
+IH : forall G E1 E2, nabla x, eq_ctx G -> {G, eq x x |- eq (E1 x) (E2 x)}* ->
+       (nabla x1 y, {G, eq x1 y |- eq (E1 x1) (E2 y)})
+H1 : eq_ctx G
+H5 : member (eq X Y) G
+============================
+ {G, eq n1 n2 |- eq X Y}
+
+eq12_aux < search.
+Proof completed.
+Abella < Theorem eq12 : 
+forall G E1 E2, eq1 G E1 E2 -> {G |- eq E1 E2}.
+
+
+============================
+ forall G E1 E2, eq1 G E1 E2 -> {G |- eq E1 E2}
+
+eq12 < induction on 1.
+
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+============================
+ forall G E1 E2, eq1 G E1 E2 @ -> {G |- eq E1 E2}
+
+eq12 < intros.
+
+Variables: G E1 E2
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H1 : eq1 G E1 E2 @
+============================
+ {G |- eq E1 E2}
+
+eq12 < case H1.
+Subgoal 1:
+
+Variables: G N
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq_ctx G
+============================
+ {G |- eq (num N) (num N)}
+
+Subgoal 2 is:
+ {G |- eq (str S) (str S)}
+
+Subgoal 3 is:
+ {G |- eq (plus E3 E4) (plus E1' E2')}
+
+Subgoal 4 is:
+ {G |- eq (times E3 E4) (times E1' E2')}
+
+Subgoal 5 is:
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < search.
+Subgoal 2:
+
+Variables: G S
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq_ctx G
+============================
+ {G |- eq (str S) (str S)}
+
+Subgoal 3 is:
+ {G |- eq (plus E3 E4) (plus E1' E2')}
+
+Subgoal 4 is:
+ {G |- eq (times E3 E4) (times E1' E2')}
+
+Subgoal 5 is:
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < search.
+Subgoal 3:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+============================
+ {G |- eq (plus E3 E4) (plus E1' E2')}
+
+Subgoal 4 is:
+ {G |- eq (times E3 E4) (times E1' E2')}
+
+Subgoal 5 is:
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H2.
+Subgoal 3:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : {G |- eq E3 E1'}
+============================
+ {G |- eq (plus E3 E4) (plus E1' E2')}
+
+Subgoal 4 is:
+ {G |- eq (times E3 E4) (times E1' E2')}
+
+Subgoal 5 is:
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H3.
+Subgoal 3:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : {G |- eq E3 E1'}
+H5 : {G |- eq E4 E2'}
+============================
+ {G |- eq (plus E3 E4) (plus E1' E2')}
+
+Subgoal 4 is:
+ {G |- eq (times E3 E4) (times E1' E2')}
+
+Subgoal 5 is:
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < search.
+Subgoal 4:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+============================
+ {G |- eq (times E3 E4) (times E1' E2')}
+
+Subgoal 5 is:
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H2.
+Subgoal 4:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : {G |- eq E3 E1'}
+============================
+ {G |- eq (times E3 E4) (times E1' E2')}
+
+Subgoal 5 is:
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H3.
+Subgoal 4:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : {G |- eq E3 E1'}
+H5 : {G |- eq E4 E2'}
+============================
+ {G |- eq (times E3 E4) (times E1' E2')}
+
+Subgoal 5 is:
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < search.
+Subgoal 5:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+============================
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H2.
+Subgoal 5:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : {G |- eq E3 E1'}
+============================
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H3.
+Subgoal 5:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 G E4 E2' *
+H4 : {G |- eq E3 E1'}
+H5 : {G |- eq E4 E2'}
+============================
+ {G |- eq (cat E3 E4) (cat E1' E2')}
+
+Subgoal 6 is:
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < search.
+Subgoal 6:
+
+Variables: G E' E
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E E' *
+============================
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H2.
+Subgoal 6:
+
+Variables: G E' E
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E E' *
+H3 : {G |- eq E E'}
+============================
+ {G |- eq (len E) (len E')}
+
+Subgoal 7 is:
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < search.
+Subgoal 7:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 (eq n1 n1 :: G) (E4 n1) (E2' n1) *
+============================
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H2.
+Subgoal 7:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 (eq n1 n1 :: G) (E4 n1) (E2' n1) *
+H4 : {G |- eq E3 E1'}
+============================
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply IH to H3.
+Subgoal 7:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 (eq n1 n1 :: G) (E4 n1) (E2' n1) *
+H4 : {G |- eq E3 E1'}
+H5 : {G, eq n1 n1 |- eq (E4 n1) (E2' n1)}
+============================
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply eq1_ctx to H2.
+Subgoal 7:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 (eq n1 n1 :: G) (E4 n1) (E2' n1) *
+H4 : {G |- eq E3 E1'}
+H5 : {G, eq n1 n1 |- eq (E4 n1) (E2' n1)}
+H6 : eq_ctx G
+============================
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < apply eq12_aux to H6 H5.
+Subgoal 7:
+
+Variables: G E2' E1' E4 E3
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq1 G E3 E1' *
+H3 : eq1 (eq n1 n1 :: G) (E4 n1) (E2' n1) *
+H4 : {G |- eq E3 E1'}
+H5 : {G, eq n1 n1 |- eq (E4 n1) (E2' n1)}
+H6 : eq_ctx G
+H7 : {G, eq n1 n2 |- eq (E4 n1) (E2' n2)}
+============================
+ {G |- eq (letv E3 E4) (letv E1' E2')}
+
+Subgoal 8 is:
+ {G n1 |- eq n1 n1}
+
+eq12 < search.
+Subgoal 8:
+
+Variables: G
+IH : forall G E1 E2, eq1 G E1 E2 * -> {G |- eq E1 E2}
+H2 : eq_ctx (G n1)
+H3 : member (eq n1 n1) (G n1)
+============================
+ {G n1 |- eq n1 n1}
+
+eq12 < search.
+Proof completed.
+Abella < 

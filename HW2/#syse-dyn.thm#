@@ -1,0 +1,68 @@
+%%% Chapter 5 (Dynamics) - Structural Dynamics
+/*@ Contributor: JTW */
+
+Specification "syse-dyn".
+Import "nat-string".
+
+
+%== Lemma 5.2: Finality of values ==
+
+Theorem finality : forall E E', {val E} -> {step E E'} -> false.
+intros. case H1.
+  case H2.
+  case H2.
+
+
+%== Lemma 5.3:  Determinacy of step ==
+
+Theorem step_det : forall E E' E'', {step E E'} -> {step E E''} -> E' = E''.
+induction on 1. intros. case H1.
+  case H2.
+    apply plus_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    Case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply times_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply cat_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply len_uniq to H3 H4. search.
+    case H4.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+  case H2. search.
+  case H2.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    apply finality to H3 H4.
+    search.

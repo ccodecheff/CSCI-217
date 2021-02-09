@@ -1,0 +1,312 @@
+Specification "hw3".           
+  
+/*--------Unicity of typing----------*/
+Define ctx/of : olist -> prop by ctx/of nil ;
+  nabla x, ctx/of (of x T :: G) := ctx/of G.
+
+Define var : A -> prop by nabla x, var x.
+
+Theorem ctx/of_inv : forall G E, ctx/of G -> member E G -> exists X T, E = of X T /\ var X.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+
+Theorem member_prune : forall E (L:list o), nabla (x:exp), member (E x) L -> exists E', E = y\E'.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem ctx/of_uniq : forall G E T T', ctx/of G -> member (of E T) G -> member (of E T') G -> T = T'.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+  case H3.
+    search.
+     apply member_prune to H5.
+     case H3.
+      apply member_prune to H5.
+      apply IH to H4 H5 H6. search.
+
+%Theorem - Unicity of Typing
+Theorem unicity : forall G E T T', ctx/of G -> {G |- of E T} -> {G |- of E T'} ->
+    T = T'.
+induction on 2. intros. case H2.
+  I1:case H3.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to H1 H5 I2.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to _ H4 I1.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to H1 H4 I1.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. search. 
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to H1 H5 I2. apply IH to H1 H4 I1.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to _ H4 I1. 
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to H1 H4 I1.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to _ H4 I1.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to H1 H4 I1.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to H1 H4 I1.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to H1 H4 I1. apply IH to _ H5 I2.
+    search.
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+  I1:case H3. apply IH to H1 H4 I1. apply IH to _ H5 I2.
+    search.  
+    I3:apply ctx/of_inv to H1 I2. case I1. case I3.
+   apply ctx/of_inv to H1 H5. case H6. case H4. case H3.
+   apply ctx/of_inv to H1 H8. case H7. apply ctx/of_uniq to H1 H5 H8.
+   search.
+
+%preservation Theorem%
+
+Theorem preservation : forall E E' T, {of E T} -> {step E E'} -> {of E' T}.
+induction on 2. intros. case H2.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H6 H4. search. 
+  case H1. case H4. inst H6 with n1 = E2. cut H7 with H5. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. search. 
+  case H1. case H4. inst H6 with n1 = E1. cut H8 with H7. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H6 H4. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. case H5. search.
+  case H1. case H5. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. case H4. inst H5 with n1 = E3. cut H8 with H7. search.
+  case H1. case H4. inst H6 with n1 = E3. cut H8 with H7. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. inst H5 with n1 = E1. cut H6 with H4. search.
+
+Theorem CFL-Nat_Lemma : forall E, {val E} -> {of E nat} -> E = z \/ exists E', E = (s E').
+intros. case H1.
+ case H2. search. case H2. search.
+ case H2.
+ case H2.
+ case H2.
+ case H2.
+ case H2.
+
+Theorem CFL-arrow_Lemma : forall E T1 T2, {val E} -> {of E (arr T1 T2)} -> exists E1, E = lam T1 E1.
+intros. case H1. case H2.
+ case H2.
+ case H2. search.
+ case H2.
+ case H2.
+ case H2.
+ case H2.
+
+Theorem  CFL-prod_Lemma: forall E T1 T2, {val E} ->   {of E (prod T1 T2)} -> exists E1 E2, E = pair E1 E2.
+intros. case H1.
+ case H2.
+ case H2.
+ case H2.
+ case H2.
+ case H2.
+ search.case H2.
+ case H2.
+
+
+Theorem CFL-void_Lemma: forall E , {val E} -> {of E void} -> false.
+intros. case H1.
+  case H2.
+  case H2.
+  case H2.
+  case H2.
+  case H2.
+  case H2.
+  case H2.
+
+Theorem  CFL-sum_Lemma: forall E T1 T2, {val E} -> {of E (sum T1 T2)} -> exists E', E = inl T2 E' \/ E = inr T1 E'.
+induction on 1. intros. case H1.
+ case H2.
+ case H2.
+ case H2.
+ case H2.
+ case H2.
+ case H2.
+ search.
+ case H2.
+ search.
+
+Theorem Progress : forall E T, {of E T} -> ( {val E} \/ exists E', {step E E'}).
+induction on 1. intros. case H1.
+ search.
+ apply IH to H2.case H3.search.
+ search.
+  apply IH to H2.case H5.apply CFL-Nat_Lemma to H6 H2. case H7. search.
+  case H6.search.
+  search.
+  search.
+  apply IH to H2.case H4.
+  apply CFL-arrow_Lemma to H5 H2.apply IH to H3.
+  case H6.search.search.
+  search.
+  search.
+   apply IH to H2.case H4.apply IH to H3.case H6.search.
+  search.
+  search.
+   apply IH to H2.case H3.apply CFL-prod_Lemma to H4 H2.case H4.search.
+  search.
+   apply IH to H2.case H3.apply CFL-prod_Lemma to H4 H2. case H4.search.
+  search.
+   apply IH to H2. case H3.apply CFL-void_Lemma to H4 H2. search.
+   apply IH to H2. case H3. search.
+  search.
+   apply IH to H2. case H3. search.
+  search.
+   apply IH to H2. case H5.apply CFL-sum_Lemma to H6 H2. case H7.
+ case H6.search.
+ case H6.search.
+  search.
+   apply IH to H2. case H4. search. search.
+
+/*----------Congruence Lemma's---------------*/
+Theorem step_lemma : forall E V, {steps E V} -> {val  V} -> {steps (s E) (s V)}.
+induction on 1.intros.case H1.
+ search.
+ apply IH to H4 H2.
+ search.
+
+
+Theorem ap_steps_val_lemma : forall E1 E2 E2' , {val E1} -> {steps E2 E2'} -> {steps (ap E1 E2) (ap E1 E2')}.
+induction on 2. intros. case H2.
+  search.
+  apply IH to H1 H4.
+  search.
+
+Theorem ap_cong_lemma : forall E1 E2 E1', {steps E1 E1'} ->  {steps (ap E1 E2) (ap E1' E2)}.
+induction on 1.intros.
+ case H1.
+ search.
+ apply IH to H3 with E2 = E2.
+ search.
+
+
+Theorem rec_cong_lemma: forall E0 E1 E E', {steps E E'} -> {steps (rec E0 E1 E) (rec E0 E1 E')}.
+induction on 1. intros. case H1.
+ search.
+ apply IH to H3 with E0 = E0, E1 = E1. search.
+
+
+Theorem trans_lemma: forall E1 E2 E3, {steps E1 E2} -> {steps E2 E3} -> {steps E1 E3}.
+induction on 1. intros. case H1.
+ search.
+ apply IH to H4 H2. search.
+
+Theorem pair_cong_lemma: forall E2 E1 E1', {steps E1 E1'} -> {steps (pair E1 E2) (pair E1' E2)}.
+induction on 1. intros. case H1.
+ search.
+ apply IH to H3 with E2 = E2.
+ search.
+
+Theorem pair_steps_val_lemma : forall E1 E2 E2', {val E1} -> {steps E2 E2'} -> {steps (pair E1 E2) (pair E1 E2')}.
+induction on 2. intros. case H2.
+  search.
+  apply IH to H1 H4.
+  search.
+
+
+Theorem fst_cong_lemma: forall E E', {steps E E'} -> {steps (fst E) (fst E')} .
+induction on 1. intros. case H1.
+ search.
+ apply IH to H3.
+ case H4.
+ search.
+ search.
+
+Theorem snd_pair_lemma : forall E1 E2 V V2, {steps E1 V} -> {steps E2 V2} -> {steps (snd (pair E1 E2)) V2}.
+induction on 1.intros.case H1.skip.skip.
+
+Theorem inl_lemma : forall E1 V T, {steps E1 V} -> {val V} -> {steps (inl T E1) V}.
+induction on 1. intros. case H1.
+ skip.skip.
+
+Theorem eval_val_lemma : forall V, {val V} -> {eval V V}.
+induction on 1. intros. case H1.
+ search. 
+ apply IH to H2. search.
+ search.
+ search.
+ apply IH to H2. apply IH to H3. search.
+ apply IH to H2. skip.
+ skip.
+
+%defining addition and  multiplication using rec {Times 3*3}
+
+Query Plus = (lam nat (n\ lam nat (m\ (rec m (x\ y\ (s y)) n)))) /\ Times = (lam nat (n\ lam nat (m\ (rec z (x\ y\ (ap (ap Plus y) m)) n)))) /\ {eval (ap (ap Times (s (s (s z)))) (s (s (s z)))) E}.
+
+Query Plus = (lam nat (n\ lam nat (m\ (rec m (x\ y\ (s y)) n)))) /\ {eval (ap (ap Plus (s (s z))) (s (s z))) E}.
+
+%Fib
+Query Plus = (lam nat (n\ lam nat (m\ (rec m (x\ y\ (s y)) n)))) /\ Fib = (lam nat (n\ (fst (rec (pair z (s z)) (x\ y\ (pair (snd y) (ap (ap Plus (fst y)) (snd y)))) n)))) /\ {eval (ap Fib (s (s (s (s (s (s z))))))) A}.
+
+Theorem strc_dyn : forall E V, {eval E V} -> {steps E V} /\ {val V} .
+induction on 1. intros. case H1.
+ search.
+ apply IH to H2.apply step_lemma to H3 H4. search.
+ search.
+ apply IH to H2.apply ap_cong_lemma to H5 with E2 = E2. apply IH to H3.skip.
+ apply IH to H2. apply IH to H3.skip.
+ apply IH to H3.skip.
+ search.
+ apply IH to H2.apply IH to H3.apply pair_cong_lemma to H4 with E2 = E2.
+ apply pair_steps_val_lemma to H5 H6. apply trans_lemma to H8 H9.search.
+ apply IH to H2. apply fst_cong_lemma to H3.skip.skip.skip.skip.skip.skip.skip.skip.
+
+
+/*--------------Theorem 8.7--------*/
+Theorem theorem_8_7: forall E V, {eval E V} -> {steps E V} /\ {val V}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. apply step_lemma to H3 H4. search.
+  search.
+  apply IH to H2. apply ap_cong_lemma to H5 with E2 = E2. apply IH to H3. apply ap_steps_val_lemma to H6 H8.
+   apply trans_lemma to H7 H10. apply trans_lemma to H11 _ with E3 = E1 V2. apply IH to H4.
+   apply trans_lemma to H12 H13. search.
+   apply IH to H2. apply IH to H3. apply rec_cong_lemma to H4 with E0 = E0, E1 = E2.
+   apply trans_lemma to H8 _ with E3 = V. search.
+   apply IH to H2. apply IH to H3. apply IH to H4.
+   apply rec_cong_lemma to H5 with E0 = E0, E1 = E2. skip.
+   skip.skip.
+   apply IH to H2. skip. 
+   apply IH to H2. apply fst_cong_lemma to H3. case H4. apply trans_lemma to H5 _ with E3 = V. skip.  
+   apply IH to H2. apply snd_pair_lemma to H3 H9.skip.
+   apply IH to H2. skip.apply IH to H2. apply IH to H3.apply pair_cong_lemma to H4 with E1 = E1, E2 = E2. case H5.skip.
+   apply IH to H2.skip.skip.skip.skip.skip.skip.skip.skip.skip.skip.
+
+
+
+/*--------Theorem 7.2---------------*/
+Theorem steps_eval_theorem : forall E V, {steps E V} -> {val V} -> {eval E V}.
+induction on 1. intros. case H1. 
+ apply eval_val_lemma to H2. search.
+ apply IH to H4 H2. skip.
+
+

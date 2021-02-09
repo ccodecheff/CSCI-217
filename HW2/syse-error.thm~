@@ -1,0 +1,159 @@
+%% Chapter 6 (Type Safety) - Run-Time Errors
+
+Specification "syse-error".
+Import "nat-string".
+
+% Your lemmas and theorems
+
+%Determinacy
+
+Theorem finality : forall E E', {val E} -> {step E E'} -> false.
+intros. case H1.
+  case H2.
+  case H2.
+
+Theorem div_uniq : forall N1 N2 N3 N3', {div_op N1 N2 N3} -> {div_op N1 N2 N3'} -> N3 = N3'.
+skip.
+
+Theorem step_det : forall E E' E'', {step E E'} -> {step E E''} -> E' = E''.
+Set subgoals off.
+induction on 1. intros. case H1.
+  case H2.
+    apply plus_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply times_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply cat_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply len_uniq to H3 H4. search.
+    case H4.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+  case H2. search.
+  case H2.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    apply finality to H3 H4.
+    search.
+% cases for div
+  case H2. 
+    apply IH to H3 H4. search.
+    apply finality to H4 H3. case H3.
+  case H2.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+    case H4.
+  case H2. 
+    case H4. case H5.
+    apply div_uniq to H3 H4. search.
+
+
+%Preservation
+
+Theorem div_type : forall N1 N2 N3, {nat N1} -> {nat N2} -> {div_op N1 N2 N3} -> {nat N3}.
+skip.
+    
+Theorem preservation : forall E E' T, {of E T} -> {step E E'} -> {of E' T}.
+Set subgoals off.
+induction on 2. intros. case H2.
+  case H1. case H4. case H5. apply plus_type to H6 H7 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H6 H4. search.
+  case H1. case H4. case H5. apply times_type to H6 H7 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H6 H4. search.
+  case H1. case H4. case H5. apply cat_type to H6 H7 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H6 H4. search.
+  case H1. case H4. apply len_type to H5 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. inst H4 with n1 = E1. cut H5 with H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. inst H5 with n1 = E1. cut H6 with H4. search.
+% cases for div
+  case H1. apply IH to H5 H3. search.
+  case H1. apply IH to H5 H4. search.
+  case H1. case H4. case H5. apply div_type to H6 H7 H3. search.
+
+%Progress
+
+Theorem canon_forms/num : forall E1, {val E1} -> {of E1 numt} -> exists N, E1 = num N.
+intros. case H1.
+  case H2.
+  case H2. search.
+
+Theorem canon_forms/str : forall E1, {val E1} -> {of E1 strt} -> exists S, E1 = str S.
+intros. case H1.
+  case H2. search.
+     case H2.
+
+Theorem div_total : forall N1 N2, {nat N1} -> {nat N2} -> (exists N3, {div_op N1 N2 N3}).  skip.
+
+Theorem progress : forall E T, {of E T} -> ({err E} \/ {val E} \/ exists E', {step E E'}).
+induction on 1. intros. case H1.
+  search.
+  search.
+  apply IH to H2. case H4. search.
+       apply IH to H3. case H6. search.     
+      apply canon_forms/num to H5 H2. apply canon_forms/num to H7 H3. case H2.
+        case H3. apply plus_total to H8 H9. search.
+      search.
+    search.
+  apply IH to H2. case H4. search.
+    apply IH to H3. case H6. search.
+      apply canon_forms/num to H5 H2. apply canon_forms/num to H7 H3. case H2.
+        case H3. apply times_total to H8 H9. search.
+      search.
+    search.
+  apply IH to H2. case H4. search.
+    apply IH to H3. case H6. search.
+      apply canon_forms/str to H5 H2. apply canon_forms/str to H7 H3. case H2.
+        case H3. apply cat_total to H8 H9. search.
+      search.
+    search.
+  apply IH to H2. case H3. search.
+    apply canon_forms/str to H4 H2. case H2. apply len_total to H5. search.
+    search.
+  search.
+  apply IH to H2. case H4. search.
+    search.
+    search.
+% cases for div
+   apply IH to H3. case H4. search.
+     apply IH to H2.  case H6. search.
+      apply canon_forms/num to H5 H3. apply canon_forms/num to H7 H2. case H2.
+        case H3. apply div_total to H8 H9. search.
+      search.
+    search.

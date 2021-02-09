@@ -1,0 +1,290 @@
+Specification "hw1".
+
+%%%%%%%%%%%%%%%% Part 1 %%%%%%%%%%%%%%%%
+
+% Alternative definition of leq
+
+Theorem leq21 : forall N, {nat N} -> {leq N N}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem leq22 : forall N M, {leq N M} -> {leq N (s M)}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+
+% leq is transitive
+
+Theorem leq_nat : forall N M, {leq N M} -> {nat M}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem leq_trans : forall N M R, {leq N M} -> {leq M R} -> {leq N R}.
+induction on 1. intros. case H1.
+  apply leq_nat to H2. search.
+  case H2. apply IH to H3 H4. search.
+
+
+% plus is increasing
+
+Theorem plus_inc1 : forall N M R, {plus N M R} -> {leq N R}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem plus_inc2 : forall N M R, {plus N M R} -> {leq M R}.
+induction on 1. intros. case H1.
+  apply leq21 to H2. search.
+  apply IH to H2. apply leq22 to H3. search.
+
+
+% plus is monotonic:
+
+Theorem plus_mono : forall N1 N2 M1 M2 R1 R2,
+  {leq N1 N2} -> {leq M1 M2} -> {plus N1 M1 R1} -> {plus N2 M2 R2} ->
+    {leq R1 R2}.
+induction on 1. intros. case H1.
+  case H3. apply plus_inc2 to H4. apply leq_trans to H2 H7. search.
+  case H3. case H4. apply IH to H5 H2 H6 H7. search.
+
+   
+% Alternative definition of plus, including inversion
+
+Theorem plus21 : forall N, {nat N} -> {plus N z N}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem plus22 : forall N M R, {plus N M R} -> {plus N (s M) (s R)}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem plus21_inv : forall N M, {plus N z M} -> N = M.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem plus22_inv : forall N M R,
+  {plus N (s M) R} ->
+    exists R', R = s R' /\ {plus N M R'}.
+induction on 1. intros. case H1.
+  case H2. search.
+  apply IH to H2. search.
+ 
+
+% Order is sufficient for plus
+
+Theorem order_suff1 : forall N R, {leq N R} -> exists M, {plus N M R}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem order_suff2 : forall M R, {leq M R} -> exists N, {plus N M R}.
+induction on 1. intros. case H1.
+  apply plus21 to H2. search.
+  apply IH to H2. apply plus22 to H3. search.
+   
+
+% Plus and times are well-typed
+
+Theorem plus_nat : forall N M R,
+  {plus N M R} ->
+    {nat N} /\ {nat M} /\ {nat R}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem times_nat : forall N M R,
+  {times N M R} ->
+    {nat N} /\ {nat M} /\ {nat R}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. apply plus_nat to H3. search.
+
+
+% Times is monotonic
+
+Theorem times_mono : forall N1 N2 M1 M2 R1 R2,
+  {leq N1 N2} -> {leq M1 M2} -> {times N1 M1 R1} -> {times N2 M2 R2} ->
+    {leq R1 R2}.
+induction on 1. intros. case H1.
+  case H3. apply times_nat to H4. search.
+  case H3. case H4. apply IH to H5 H2 H6 H8. apply plus_mono to H10 H2 H7 H9.
+  /**/ search.
+
+   
+% Times by non-zero is increasing
+
+Theorem times_inc1 : forall N M R, {times N (s M) R} -> {leq N R}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. apply plus22_inv to H3. apply plus_inc1 to H5.
+   /**/ apply leq_trans to H4 H6. search.
+
+Theorem times_inc2 : forall N M R, {times (s N) M R} -> {leq M R}.   
+intros. case H1. apply plus_inc2 to H3. search.
+
+  
+
+%%%%%%%%%%%%%%%% Part 2 %%%%%%%%%%%%%%%%
+
+% Existence of plus and mult
+
+Theorem plus_exists : forall N M,
+  {nat N} -> {nat M} ->
+    exists R, {plus N M R}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H3 H2. search.
+
+Theorem times_exists : forall N M,
+  {nat N} -> {nat M} ->
+    exists R, {times N M R}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H3 H2. apply times_nat to H4. apply plus_exists to H7 H6. search.
+
+
+% Uniqueness of plus and mult
+
+Theorem plus_uniq : forall N M R1 R2,
+  {plus N M R1} -> {plus N M R2} ->
+    R1 = R2.
+induction on 1. intros. case H1.
+  case H2. search.
+  case H2. apply IH to H3 H4. search.
+
+Theorem times_uniq : forall N M R1 R2,
+  {times N M R1} -> {times N M R2} ->
+    R1 = R2.
+induction on 1. intros. case H1.
+  case H2. search.
+  case H2. apply IH to H3 H5. apply plus_uniq to H4 H6. search.
+
+
+% Commutativity and associativity of plus
+
+Theorem plus_comm1 : forall N M R1 R2,
+  {plus N M R1} -> {plus M N R2} ->
+    R1 = R2.
+induction on 1. intros. case H1.
+  apply plus21_inv to H2. search.
+  apply plus22_inv to H2. apply IH to H3 H4. search.
+
+Theorem plus_comm2 : forall N M R, {plus N M R} -> {plus M N R}.
+induction on 1. intros. case H1.
+  apply plus21 to H2. search.
+  apply IH to H2. apply plus22 to H3. search.
+
+Theorem plus_assoc1 : forall N M NM R MR NMR1 NMR2,
+  {plus N M NM} -> {plus NM R NMR1} -> {plus M R MR} -> {plus N MR NMR2} ->
+    NMR1 = NMR2.
+induction on 1. intros. case H1.
+  case H4. apply plus_uniq to H2 H3. search.
+  case H2. case H4. apply IH to H5 H6 H3 H7. search.
+  
+Theorem plus_assoc21 : forall N M NM R NMR,
+  {plus N M NM} -> {plus NM R NMR} ->
+    exists MR, {plus M R MR} /\ {plus N MR NMR}.    
+induction on 1. intros. case H1.
+  apply plus_nat to H2. search.
+  case H2. apply IH to H3 H4. search.
+
+Theorem plus_assoc22 : forall M R MR N NMR,
+  {plus M R MR} -> {plus N MR NMR} ->   
+    exists NM, {plus N M NM} /\ {plus NM R NMR}.
+induction on 2. intros. case H2.
+  apply plus_nat to H1. apply plus21 to H4. search.
+  apply IH to H1 H3. apply plus22 to H4. search.
+
+
+% Alternative definition of times, including inversion
+
+Theorem times21 : forall N, {nat N} -> {times N z z}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem times22 : forall N M NM R,
+  {times N M NM} -> {plus N NM R} ->
+    {times N (s M) R}.
+induction on 1. intros. case H1.
+  case H2. search.
+  case H2. apply plus_assoc22 to H4 H5. apply IH to H3 H6. apply plus22 to H7.
+  /**/ search.
+
+Theorem times21_inv : forall N R, {times N z R} -> R = z. 
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. case H3. search.
+
+Theorem times22_inv : forall N M R,
+  {times N (s M) R} ->
+    exists NM, {times N M NM} /\ {plus N NM R}.
+induction on 1. intros. case H1.
+  case H2. search.
+  apply IH to H2. apply plus22_inv to H3. 
+  apply plus_assoc21 to H5 H6. search.
+
+
+% Commutativity of times
+
+Theorem times_comm1 : forall N M R1 R2,
+  {times N M R1} -> {times M N R2} ->
+    R1 = R2.
+induction on 1. intros. case H1.
+  apply times21_inv to H2. search.
+  apply times22_inv to H2. apply IH to H3 H5. apply plus_comm1 to H4 H6. search.
+
+Theorem times_comm2 : forall N M R, {times N M R} -> {times M N R}.
+induction on 1. intros. case H1.
+  apply times21 to H2. search.
+  apply IH to H2. apply plus_comm2 to H3. apply times22 to H4 H5. search.
+
+
+% Distributivity and factoring for times and plus
+
+Theorem distrib : forall N M R S T,
+  {plus N M R} -> {times R S T} ->
+    exists NS MS, {times N S NS} /\ {times M S MS} /\ {plus NS MS T}.
+induction on 1. intros. case H1.
+  apply times_nat to H2. search.
+  case H2. apply IH to H3 H4. apply plus_assoc21 to H8 H5.
+  /**/ apply plus_comm2 to H9. apply plus_assoc22 to H11 H10. search.
+
+Theorem factor : forall N R NR M MR NMR,
+  {times N R NR} -> {times M R MR} -> {plus NR MR NMR} ->
+    exists NM, {plus N M NM} /\ {times NM R NMR}.
+induction on 1. intros. case H1.
+  case H3. apply times_nat to H2. search.
+  apply plus_assoc21 to H5 H3. apply plus_comm2 to H6.
+  /**/ apply plus_assoc22 to H8 H7. apply IH to H4 H2 H9. search.
+
+ 
+% Associativity of times
+
+Theorem times_assoc1 : forall N M NM R MR NMR1 NMR2,
+  {times N M NM} -> {times NM R NMR1} -> {times M R MR} -> {times N MR NMR2} ->
+    NMR1 = NMR2.
+induction on 1. intros. case H1.
+  case H2. case H4. search.
+  case H4. apply distrib to H6 H2. apply IH to H5 H9 H3 H7.
+  /**/ apply times_uniq to H3 H10. apply plus_uniq to H8 H11. search.
+
+Theorem times_assoc21 : forall N M NM R NMR,
+  {times N M NM} -> {times NM R NMR} ->
+    exists MR, {times M R MR} /\ {times N MR NMR}.    
+induction on 1. intros. case H1.
+  case H2. apply times_exists to H3 H4. apply times_nat to H5. search.
+  apply distrib to H4 H2. apply IH to H3 H5. apply times_uniq to H6 H8. search.
+
+Theorem times_assoc22 : forall M R MR N NMR,
+  {times M R MR} -> {times N MR NMR} ->   
+    exists NM, {times N M NM} /\ {times NM R NMR}.
+induction on 2. intros. case H2.
+  apply times_nat to H1. search.
+  apply IH to H1 H3. apply factor to H6 H1 H4. search.

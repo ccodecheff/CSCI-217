@@ -1,0 +1,272 @@
+%%% Chapter 4 (Statics) - Statics
+/*@ Contributor: JTW */
+
+Specification "syse-stat".
+Import "syse-synt".
+
+
+%== Typing contexts ==
+
+Close nat, string, typ.
+
+Define ctx : olist -> prop by
+  ctx nil ;
+  nabla x, ctx (of x T :: G) := ctx G.
+
+Theorem ctx_inv : forall G E,
+  ctx G -> member E G ->
+    exists X T, E = of X T /\ var X.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+
+
+%== Uniqueness of type declarations in contexts ==
+
+Theorem ctx_uniq : forall G E T T',
+  ctx G -> member (of E T) G -> member (of E T') G ->
+    T = T'.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    case H3.
+      search.
+      apply member_prune to H5.
+    case H3.
+      apply member_prune to H5.
+      apply IH to H4 H5 H6. search.
+
+
+%== Lemma 4.1: Unicity of typing ==
+
+Theorem unicity : forall G E T T',
+  ctx G -> {G |- of E T} -> {G |- of E T'} ->
+    T = T'.
+induction on 2. intros. case H2.
+  I1:case H3.
+    search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    apply IH to H1 H4 I1. apply IH to _ H5 I2. search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    apply IH to H1 H4 I1. apply IH to _ H5 I2. search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  apply ctx_inv to H1 H5. case H6. case H4. case H3. apply ctx_inv to H1 H8.
+  /**/ case H7. apply ctx_uniq to H1 H5 H8. search.
+
+
+%== Lemma 4.2: Inversion for typing (plus case) ==
+
+Theorem of_inv/plus : forall G E1 E2 T,
+  ctx G -> {G |- of (plus E1 E2) T} ->
+    T = numt /\ {G |- of E1 numt} /\ {G |- of E2 numt}.
+intros. I1:case H2.
+  search.
+  I3:apply ctx_inv to H1 I2. case I1. case I3.
+
+
+%== Lemma 4.3: Weakening ==
+/*@ Abella has weakening built into its `search` tactic, so this is just a
+simple search. Nevertheless, we can prove it inductively as well. Note that the
+`search` in Subgoal 7 of the inductive proof uses an implicit exchange, where
+the order of the two last assumptions in the context are swapped. This is
+allowed, because Abella always treats contexts as sets rather than as lists. */
+
+Theorem of_weak : forall G E' T' T, nabla x,
+  {G |- of E' T'} ->
+    {G, of x T |- of E' T'}.
+search.
+
+Theorem of_weak' : forall G E' T' T, nabla x,
+  {G |- of E' T'} ->
+    {G, of x T |- of E' T'}.
+induction on 1. intros. case H1.
+  search.
+  search.
+  apply IH to H2 with T = T. apply IH to H3 with T = T. search.
+  apply IH to H2 with T = T. apply IH to H3 with T = T. search.
+  apply IH to H2 with T = T. apply IH to H3 with T = T. search.
+  apply IH to H2 with T = T. search.
+  apply IH to H2 with T = T. apply IH to H3 with T = T. search.
+  apply IH to H2 with T = T. apply IH to H3 with T = T. search.
+  search. 
+
+
+%== Strengthening ==
+/*@ Valid contexts, as defined by `ctx`, are lists of typing (`of`) judgments.
+Since the rules for the index (`nat` and `string`) judgments don't make use of
+typing judgments, it follows that such valid contexts don't help in deriving the
+index judgments and can be dispensed with. However, if we left out the
+hypothesis ctx G, this theorem would be false; consider G = nat N :: nil. Even a
+formulation like `forall G T N, nabla x, {G, of x T |- nat N} -> {G |- nat N}`
+is false for arbitrary G; consider G = (of x T => nat N) :: nil */
+
+Theorem strength/nat : forall G N,
+  ctx G -> {G |- nat N} ->
+    {nat N}.
+induction on 2. intros. I1:case H2.
+  search.
+  apply IH to H1 I1. search.
+  apply ctx_inv to H1 I2. case I1.
+
+Theorem strength/string : forall G S,
+  ctx G -> {G |- string S} ->
+    {string S}.
+induction on 2. intros. I1:case H2.
+  search.
+  apply strength/nat to H1 I1. apply IH to H1 I2. search.
+  apply ctx_inv to H1 I2. case I1.
+
+
+%== Lemma 4.4: Substitution ==
+/*@ Since assumptions are hypothetical in Abella in the sense of Chapter 3, this
+lemma follows from what is called Transitivity there, and is achieved in Abella
+with `inst` and `cut`.  Nevertheless, we can again prove it inductively as well,
+which requires the strengthening lemmas for the index judgments and thus the
+assumption ctx G. */
+
+Theorem subst : forall G T E' T' E, nabla x,
+  {G, of x T |- of (E' x) T'} -> {G |- of E T} ->
+    {G |- of (E' E) T'}.
+intros. inst H1 with n1 = E. cut H3 with H2. search.
+
+Theorem subst' : forall G T E' T' E, nabla x,
+  ctx G -> {G, of x T |- of (E' x) T'} -> {G |- of E T} ->
+    {G |- of (E' E) T'}.
+induction on 2. intros. I1:case H2.
+  apply strength/nat to _ I1. search.
+  apply strength/string to _ I1. search.
+  apply IH to _ I1 H3. apply IH to _ I2 H3. search.
+  apply IH to _ I1 H3. apply IH to _ I2 H3. search.
+  apply IH to _ I1 H3. apply IH to _ I2 H3. search.
+  apply IH to _ I1 H3. search.
+  apply IH to _ I1 H3. apply IH to _ I2 _. search.
+  apply IH to _ I1 H3. apply IH to _ I2 _. search.
+  I3:case I2.
+    case I1. search.
+    apply member_prune to I3. apply ctx_inv to H1 I3. case I1. search.
+
+
+%== Lemma 4.5: Decomposition ==
+/*@ This lemma involves a quantification over (and induction on) open
+expressions, so we define those first and then show that this definition is
+general enough to include all well-typed open expressions in the sense of the
+`of` judgment. */
+
+Define open_exp : exp -> prop by
+  nabla x, open_exp x ;   % open expressions can include variables
+  open_exp (num N) ;
+  open_exp (str S) ;
+  open_exp (plus E1 E2) := open_exp E1 /\ open_exp E2 ;
+  open_exp (times E1 E2) := open_exp E1 /\ open_exp E2 ;
+  open_exp (cat E1 E2) := open_exp E1 /\ open_exp E2 ;
+  open_exp (len E1) := open_exp E1 ;
+  open_exp (let E1 E2) := open_exp E1 /\ nabla x, open_exp (E2 x) ;
+  open_exp (letv E1 E2) := open_exp E1 /\ nabla x, open_exp (E2 x) .
+
+Theorem of_open : forall G E T, ctx G -> {G |- of E T} -> open_exp E.
+induction on 2. intros. case H2.
+  search.
+  search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. search.
+  apply IH to H1 H3. apply IH to _ H4. search.
+  apply IH to H1 H3. apply IH to _ H4. search.
+  apply ctx_inv to H1 H4. case H3. case H5. search.
+
+Theorem decomp : forall G E' E T' T, nabla x,
+  ctx G -> open_exp (E' x) -> {G |- of (E' E) T'} -> {G |- of E T} ->
+    {G, of x T |- of (E' x) T'}.
+induction on 2. intros. case H2.
+  search.
+  apply unicity to H1 H3 H4. search.
+  search.
+  search.
+  I1:case H3.
+    apply IH to H1 H5 I1 H4. apply IH to H1 H6 I2 H4. search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    apply IH to H1 H5 I1 H4. apply IH to H1 H6 I2 H4. search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    apply IH to H1 H5 I1 H4. apply IH to H1 H6 I2 H4. search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    apply IH to H1 H5 I1 H4. search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    apply IH to H1 H5 I1 H4. permute (n1 n2) I2. apply IH to _ H6 I2 _.  search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+  I1:case H3.
+    apply IH to H1 H5 I1 H4. permute (n1 n2) I2. apply IH to _ H6 I2 _.  search.
+    I3:apply ctx_inv to H1 I2. case I1. case I3.
+
+
+%== Example of untypability ==
+
+Theorem untypable : forall T N S,
+  {nat N} -> {string S} -> {of (plus (num N) (str S)) T} ->
+    false.
+intros. case H3. case H5.
+
+
+%== Reflexivity of equality ==
+/*@ Any closed, well-typed term in the by-value fragment is equal to itself in
+the sense of the `eq` judgment. Absent a predicate capturing this fragment, we
+use the full typing judgment and `skip` the let case. This result is complicated
+by the difficulty of generating two-variable judgments from single binders. */
+
+Define ofeq_ctx : list o -> list o -> prop by
+  ofeq_ctx nil nil;
+  nabla x, ofeq_ctx (of x T :: G) (eq x x :: H) := ofeq_ctx G H.
+
+Theorem ofeq_ctx_inv : forall G H E,
+  ofeq_ctx G H -> member E G ->
+    exists X T, E = of X T /\ var X /\ member (eq X X) H.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+
+Theorem ofeq_eq : forall G H, ofeq_ctx G H -> eq_ctx H.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+Theorem of_eq_aux : forall G H E T,
+  ofeq_ctx G H -> {G |- of E T} -> 
+    eq1 H E E.
+induction on 2. intros. case H2.
+  apply ofeq_eq to H1. search.
+  apply ofeq_eq to H1. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. search.
+  skip.  % This case does not arise in the by-value fragment
+  apply IH to H1 H3. apply IH to _ H4 with H = eq n1 n1 :: H. search.
+  apply ofeq_ctx_inv to H1 H4. case H3. case H5. apply ofeq_eq to H1. search.
+
+Theorem of_eq : forall E T, {of E T} -> {eq E E}.
+intros. apply of_eq_aux to _ H1. apply eq12 to H2. search.

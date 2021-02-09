@@ -1,0 +1,236 @@
+%% Chapter 6 (Type Safety) - Run-Time Errors
+
+Specification "syse-error".
+Import "nat-string".
+
+
+%==**************Determinacy Theorem****************%
+
+Theorem finality : forall E E', {val E} -> {step E E'} -> false.
+intros. case H1.
+  case H2.
+  case H2.
+
+
+%==***** Division Uniqueness*****==
+
+
+Theorem div_lemma1: forall N1 M N2, {lt N1 N2} -> {plus_op N2 M N1}->false.
+induction on 1. intros. 
+  case H1. case H2.
+  case H2.
+  apply IH to H3 H4.
+
+Theorem div_lemma2: forall N1 N2 N2' N3, {plus_op N1 N2 N3} -> {plus_op N1 N2' N3} -> N2 = N2'.
+induction on 1. intros. case H1.
+  case H2.search.
+  case H2.
+  apply IH to H3 H4. search.
+
+%=============Div unique lemma=================%
+
+Theorem div_uniq : forall N1 N2 N3 N3', {div_op N1 N2 N3} -> {div_op N1 N2 N3'} -> N3 = N3'.
+induction on 1. intros. case H1.
+  case H2. search.apply div_lemma1 to H3 H4.
+  case H2.apply div_lemma1 to H5 H3.apply div_lemma2 to H3 H5.
+  apply IH to H4 H6.search.
+
+%=====================================
+
+
+Theorem step_det : forall E E' E'', {step E E'} -> {step E E''} -> E' = E''.
+induction on 1. intros. case H1.
+  case H2.
+    apply plus_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply times_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply cat_uniq to H3 H4. search.
+    case H4.
+    case H5.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    case H4.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+  case H2.
+    apply len_uniq to H3 H4. search.
+    case H4.
+  case H2.
+    case H3.
+    apply IH to H3 H4. search.
+  case H2. search.
+  case H2.
+    apply IH to H3 H4. search.
+    apply finality to H4 H3.
+  case H2.
+    apply finality to H3 H4.
+    search.
+% New cases for div
+  case H2. 
+    apply IH to H3 H4. search.
+    apply finality to H4 H3. case H3.
+  case H2.
+    apply finality to H3 H5.
+    apply IH to H4 H6. search.
+    case H4.
+  case H2. 
+    case H4. case H5.
+    apply div_uniq to H3 H4. search.
+
+
+%Preservation Theorem
+
+%==********* Division Typing Lemmas********** ==
+
+Theorem div_type_lemma1 : forall N1 N2 N3, {nat N1} -> {nat N3} -> {plus_op N1 N2 N3} -> {nat N2}.
+induction on 3. intros. case H3.
+  search.
+  case H1. case H2. apply IH to H5 H6 H4. search.
+
+Theorem div_type_Th : forall N1 N2 N3, {nat N1} -> {nat N2} -> {div_op N1 N2 N3} -> {nat N3}.
+induction on 3. intros. case H3.
+  search.
+  apply div_type_lemma1 to H2 H1 H4. apply IH to H6 H2 H5. search.
+
+%==== Preservation Theorem ====%
+    
+Theorem preservation : forall E E' T, {of E T} -> {step E E'} -> {of E' T}.
+Set subgoals off.
+induction on 2. intros. case H2.
+  case H1. case H4. case H5. apply plus_type to H6 H7 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H6 H4. search.
+  case H1. case H4. case H5. apply times_type to H6 H7 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H6 H4. search.
+  case H1. case H4. case H5. apply cat_type to H6 H7 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. apply IH to H6 H4. search.
+  case H1. case H4. apply len_type to H5 H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. inst H4 with n1 = E1. cut H5 with H3. search.
+  case H1. apply IH to H4 H3. search.
+  case H1. inst H5 with n1 = E1. cut H6 with H4. search.
+% cases for div
+  case H1. apply IH to H5 H3. search.
+  case H1. apply IH to H5 H4. search.
+  case H1. case H4. case H5. apply div_type_Th to H6 H7 H3. search.
+
+
+Theorem canon_forms/num : forall E1, {val E1} -> {of E1 numt} -> exists N, E1 = num N.
+intros. case H1.
+  case H2.
+  case H2. search.
+
+Theorem canon_forms/str : forall E1, {val E1} -> {of E1 strt} -> exists S, E1 = str S.
+intros. case H1.
+  case H2. search.
+     case H2.
+
+%==============Lemmas for Div_Total==============%
+
+Define lt_acc : nat -> prop by
+        lt_acc N := forall M, {lt M N} -> lt_acc M. 
+
+ 
+Theorem lemma1_lt: forall N M, {lt  N M} -> M = (s N) \/  exists M', M =(s M') /\ {lt N M'}.    
+induction on 1. intros. case H1.
+   case H2.search.search.
+apply IH to H2.case H3.search.search.
+
+Theorem nat_acc_lemma : forall N, {nat N} -> lt_acc N.
+induction on 1. intros. case H1.
+  unfold.intros. case H2.
+       apply IH to H2. unfold. intros.
+   apply lemma1_lt to H4. case H5.search.
+   case H3.apply H7 to H6.search.
+
+Theorem div_Total_lemma1:  forall N1 N2,{nat N1} -> {nat N2} -> {lt N1 N2} \/ exists M, {plus_op N2 M N1} /\ {nat M}.
+induction on 2.intros. case H2.
+   search.case H1.search.apply IH to H4 H3.case H5.
+      search.search.
+
+Theorem lt_nat_lemma : forall N, {nat N} -> {lt N (s N)}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+    
+
+Theorem lt_s_lemma : forall N1 N2, {lt N1 N2} -> {lt  N1 (s N2)}.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.    
+
+
+Theorem div_Total_lemma2: forall N1 N2 M, {nat N2} -> {nat M} -> {plus_op (s N2) M N1} -> {lt M N1}.
+       induction on 1.intros.case H1. case H3.case H4. apply lt_nat_lemma to H2.search.
+       case H3. apply IH to H4 H2 H5.apply lt_s_lemma to H6.search.
+   
+
+Theorem div_total : forall N1 N2, {nat N1} -> lt_acc N1  -> {nat N2}  ->exists N3, {div_op N1 (s N2) N3}.
+           induction on 2.intros.case H2.apply div_Total_lemma1 to H1 _with N2 = (s N2).case H5.search.
+           apply div_Total_lemma2 to H3 H7 H6.apply H4 to H8.apply IH to H7 H9 H3.search.
+
+
+%************************Progress with Error  (Theorem 6.5)********************%
+Theorem progress : forall E T, {of E T} -> ({err E} \/ {val E} \/ exists E', {step E E'}).
+induction on 1. intros. case H1.
+  search.
+  search.
+  apply IH to H2. case H4. search.
+       apply IH to H3. case H6. search.     
+      apply canon_forms/num to H5 H2. apply canon_forms/num to H7 H3. case H2.
+        case H3. apply plus_total to H8 H9. search.
+      search.
+    search.
+  apply IH to H2. case H4. search.
+    apply IH to H3. case H6. search.
+      apply canon_forms/num to H5 H2. apply canon_forms/num to H7 H3. case H2.
+        case H3. apply times_total to H8 H9. search.
+      search.
+    search.
+  apply IH to H2. case H4. search.
+    apply IH to H3. case H6. search.
+      apply canon_forms/str to H5 H2. apply canon_forms/str to H7 H3. case H2.
+        case H3. apply cat_total to H8 H9. search.
+      search.
+    search.
+  apply IH to H2. case H3. search.
+    apply canon_forms/str to H4 H2. case H2. apply len_total to H5. search.
+    search.
+  search.
+  apply IH to H2. case H4. search.
+    search.
+    search.
+% cases for div
+   apply IH to H3. case H4. search.
+     apply IH to H2.  case H6. search.
+      apply canon_forms/num to H5 H3. apply canon_forms/num to H7 H2. case H2.
+        case H3. case H9. search.apply nat_acc_lemma  to H8. apply div_total to H8 H11 H10.search.
+      search.
+    search.
